@@ -1,0 +1,14 @@
+{
+  "name": "geoedit-editor",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/plepe/geoedit-editor",
+  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "lint": "standard --fix src/*.js index.js"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1"
+  }
+}
