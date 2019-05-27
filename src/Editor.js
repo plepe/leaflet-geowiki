@@ -1,7 +1,15 @@
 /* global L:false */
+const EventEmitter = require('events')
 
-class Editor {
+/**
+ * Something changed within the content (feature added, feature modified, feature deleted)
+ * @event Editor#change
+ * @param {object} event - Event from Leaflet.Draw
+ */
+
+class Editor extends EventEmitter {
   constructor (options) {
+    super()
     this.map = L.map(options.dom).setView([ 48.2006, 16.3673 ], 16)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,7 +29,11 @@ class Editor {
       var layer = event.layer
 
       this.items.addLayer(layer)
+
+      this.emit('change', event)
     })
+    this.map.on(L.Draw.Event.EDITED, event => this.emit('change', event))
+    this.map.on(L.Draw.Event.DELETED, event => this.emit('change', event))
   }
 
   load (contents) {
