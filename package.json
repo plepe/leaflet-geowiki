@@ -1,8 +1,8 @@
 {
-  "name": "geoedit-editor",
+  "name": "geowiki-editor",
   "version": "0.0.1",
   "main": "index.js",
-  "repository": "https://github.com/plepe/geoedit-editor",
+  "repository": "https://github.com/plepe/geowiki-editor",
   "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
   "license": "GPL-3.0",
   "scripts": {
