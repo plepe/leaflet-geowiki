@@ -17,7 +17,7 @@ class Editor {
     })
     this.map.addControl(drawControl)
 
-    this.map.on(L.Draw.Event.CREATED, function (event) {
+    this.map.on(L.Draw.Event.CREATED, event => {
       var layer = event.layer
 
       this.items.addLayer(layer)
