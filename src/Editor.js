@@ -19,6 +19,11 @@ class Editor extends EventEmitter {
     this.items = new L.FeatureGroup()
     this.map.addLayer(this.items)
     var drawControl = new L.Control.Draw({
+      draw: {
+        polyline: {
+          shapeOptions: {}
+        },
+      },
       edit: {
         featureGroup: this.items,
         edit: false
@@ -35,6 +40,8 @@ class Editor extends EventEmitter {
     })
     this.map.on(L.Draw.Event.EDITED, event => this.emit('change', event))
     this.map.on(L.Draw.Event.DELETED, event => this.emit('change', event))
+
+    this.currentEdit = null
   }
 
   load (contents) {
@@ -52,9 +59,18 @@ class Editor extends EventEmitter {
   }
 
   addLayer (layer) {
-    layer.on('click', e => layer.editing.enable())
+    layer.on('click', e => {
+      if (this.currentEdit) {
+        this.currentEdit.editing.disable()
+        this.currentEdit = null
+      }
+
+      layer.editing.enable()
+      this.currentEdit = layer
+    })
+
     if (layer.setStyle) {
-      layer.setStyle({ editing: {} })
+      layer.setStyle({ editing: {}, original: {} })
     }
 
     this.items.addLayer(layer)
