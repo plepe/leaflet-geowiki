@@ -10,7 +10,20 @@ const EventEmitter = require('events')
 class Editor extends EventEmitter {
   constructor (options) {
     super()
-    this.map = L.map(options.dom).setView([ 48.2006, 16.3673 ], 16)
+    let dom = options.dom
+    if (typeof options.dom === 'string') {
+      dom = document.getElementById(options.dom)
+    }
+
+    let mapDom = document.createElement('div')
+    mapDom.className = 'geowiki-editor-map'
+    dom.appendChild(mapDom)
+
+    let sidebarDom = document.createElement('div')
+    sidebarDom.className = 'geowiki-editor-sidebar'
+    dom.appendChild(sidebarDom)
+
+    this.map = L.map(mapDom).setView([ 48.2006, 16.3673 ], 16)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
