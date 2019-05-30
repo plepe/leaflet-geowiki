@@ -48,9 +48,11 @@ class Editor extends EventEmitter {
       var layer = event.layer
 
       this.addLayer(layer)
+      this.editLayer(layer)
 
       this.emit('change', event)
     })
+    this.map.on(L.Draw.Event.DRAWSTART, event => this.disableCurrentEditing())
     this.map.on(L.Draw.Event.EDITED, event => this.emit('change', event))
     this.map.on(L.Draw.Event.DELETED, event => this.emit('change', event))
 
