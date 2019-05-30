@@ -1,5 +1,9 @@
 /* global L:false */
 const EventEmitter = require('events')
+const ModulekitForm = require('modulekit-form')
+
+const getLayerForm = require('./getLayerForm')
+global.lang_str = {}
 
 /**
  * Something changed within the content (feature added, feature modified, feature deleted)
@@ -19,9 +23,9 @@ class Editor extends EventEmitter {
     mapDom.className = 'geowiki-editor-map'
     dom.appendChild(mapDom)
 
-    let sidebarDom = document.createElement('div')
-    sidebarDom.className = 'geowiki-editor-sidebar'
-    dom.appendChild(sidebarDom)
+    this.sidebarDom = document.createElement('div')
+    this.sidebarDom.className = 'geowiki-editor-sidebar'
+    dom.appendChild(this.sidebarDom)
 
     this.map = L.map(mapDom).setView([ 48.2006, 16.3673 ], 16)
 
@@ -88,6 +92,28 @@ class Editor extends EventEmitter {
 
     layer.editing.enable()
     this.currentEdit = layer
+
+    this.sidebarDom.innerHTML = ''
+    let f = new ModulekitForm(
+      'page',
+      getLayerForm(layer), {
+        change_on_input: true
+      }
+    )
+
+    f.set_data({
+      properties: layer.feature.properties
+    })
+
+    f.show(this.sidebarDom)
+
+    f.onchange = () => {
+      let newData = f.get_data()
+
+      for (let k in newData.properties) {
+        layer.feature.properties[k] = newData.properties[k]
+      }
+    }
   }
 
   disableCurrentEditing () {

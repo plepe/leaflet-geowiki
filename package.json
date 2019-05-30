@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "modulekit-form": "https://github.com/plepe/modulekit-form#browserify"
   }
 }
