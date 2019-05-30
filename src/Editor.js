@@ -72,21 +72,27 @@ class Editor extends EventEmitter {
   }
 
   addLayer (layer) {
-    layer.on('click', e => {
-      if (this.currentEdit) {
-        this.currentEdit.editing.disable()
-        this.currentEdit = null
-      }
-
-      layer.editing.enable()
-      this.currentEdit = layer
-    })
+    layer.on('click', e => this.editLayer(layer))
 
     if (layer.setStyle) {
       layer.setStyle({ editing: {}, original: {} })
     }
 
     this.items.addLayer(layer)
+  }
+
+  editLayer (layer) {
+    this.disableCurrentEditing()
+
+    layer.editing.enable()
+    this.currentEdit = layer
+  }
+
+  disableCurrentEditing () {
+    if (this.currentEdit) {
+      this.currentEdit.editing.disable()
+      this.currentEdit = null
+    }
   }
 
   save () {
