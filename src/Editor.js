@@ -3,6 +3,8 @@ const EventEmitter = require('events')
 const ModulekitForm = require('modulekit-form')
 
 const getLayerForm = require('./getLayerForm')
+const applyStyle = require('./applyStyle')
+const defaultStyle = require('./defaultStyle')
 global.lang_str = {}
 
 /**
@@ -50,6 +52,7 @@ class Editor extends EventEmitter {
 
     this.map.on(L.Draw.Event.CREATED, event => {
       var layer = event.layer
+      layer.feature = { type: 'Feature', properties: {}, style: {} }
 
       this.addLayer(layer)
       this.editLayer(layer)
@@ -81,6 +84,7 @@ class Editor extends EventEmitter {
     layer.on('click', e => this.editLayer(layer))
 
     if (layer.setStyle) {
+      applyStyle(layer, layer.feature.style)
       layer.setStyle({ editing: {}, original: {} })
     }
 
@@ -102,7 +106,8 @@ class Editor extends EventEmitter {
     )
 
     f.set_data({
-      properties: layer.feature.properties
+      properties: layer.feature.properties,
+      style: layer.feature.style
     })
 
     f.show(this.sidebarDom)
@@ -113,6 +118,15 @@ class Editor extends EventEmitter {
       for (let k in newData.properties) {
         layer.feature.properties[k] = newData.properties[k]
       }
+      for (let k in newData.style) {
+        if (newData.style[k] === null) {
+          delete layer.feature.style[k]
+        } else {
+          layer.feature.style[k] = newData.style[k]
+        }
+      }
+
+      applyStyle(layer, layer.feature.style)
     }
   }
 
