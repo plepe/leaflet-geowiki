@@ -64,6 +64,14 @@ class Editor extends EventEmitter {
     this.map.on(L.Draw.Event.DELETED, event => this.emit('change', event))
 
     this.currentEdit = null
+
+    let f = new ModulekitForm('page', {
+      title: {
+        type: 'text',
+        name: 'Title'
+      }
+    })
+    f.show(this.sidebarDom)
   }
 
   load (contents) {
