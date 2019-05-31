@@ -2,9 +2,7 @@
 const EventEmitter = require('events')
 const ModulekitForm = require('modulekit-form')
 
-const getLayerForm = require('./getLayerForm')
-const applyStyle = require('./applyStyle')
-const defaultStyle = require('./defaultStyle')
+const Layer = require('./Layer')
 global.lang_str = {}
 
 /**
@@ -35,6 +33,8 @@ class Editor extends EventEmitter {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map)
 
+    this.layer = new Layer(this)
+
     this.items = new L.FeatureGroup()
     this.map.addLayer(this.items)
     var drawControl = new L.Control.Draw({
@@ -51,11 +51,8 @@ class Editor extends EventEmitter {
     this.map.addControl(drawControl)
 
     this.map.on(L.Draw.Event.CREATED, event => {
-      var layer = event.layer
-      layer.feature = { type: 'Feature', properties: {}, style: {} }
-
-      this.addLayer(layer)
-      this.editLayer(layer)
+      let item = this.layer.createLayer(event.layer)
+      item.edit()
 
       this.emit('change', event)
     })
@@ -78,80 +75,24 @@ class Editor extends EventEmitter {
     let data = JSON.parse(contents)
 
     if (data.type === 'FeatureCollection') {
-      data.features.forEach(feature => {
-        L.geoJSON(feature).getLayers().forEach(layer => this.addLayer(layer))
-      })
+      this.layer.load(data)
     } else if (data.type === 'Feature') {
-      this.items.addLayer(L.geoJSON(data).getLayers().forEach(layer =>
-        this.items.addLayer(layer)
-      ))
-    }
-  }
-
-  addLayer (layer) {
-    layer.on('click', e => this.editLayer(layer))
-
-    if (layer.setStyle) {
-      applyStyle(layer, layer.feature.style)
-      layer.setStyle({ editing: {}, original: {} })
-    }
-
-    this.items.addLayer(layer)
-  }
-
-  editLayer (layer) {
-    this.disableCurrentEditing()
-
-    layer.editing.enable()
-    this.currentEdit = layer
-
-    this.sidebarDom.innerHTML = ''
-    let f = new ModulekitForm(
-      'page',
-      getLayerForm(layer), {
-        change_on_input: true
-      }
-    )
-
-    f.set_data({
-      properties: layer.feature.properties,
-      style: layer.feature.style
-    })
-
-    f.show(this.sidebarDom)
-
-    f.onchange = () => {
-      let newData = f.get_data()
-
-      for (let k in newData.properties) {
-        layer.feature.properties[k] = newData.properties[k]
-      }
-      for (let k in newData.style) {
-        if (newData.style[k] === null) {
-          delete layer.feature.style[k]
-        } else {
-          layer.feature.style[k] = newData.style[k]
-        }
-      }
-
-      applyStyle(layer, layer.feature.style)
+      this.layer.load({
+        type: 'FeatureCollection',
+        features: [ data ]
+      })
     }
   }
 
   disableCurrentEditing () {
     if (this.currentEdit) {
-      this.currentEdit.editing.disable()
+      this.currentEdit.disableEdit()
       this.currentEdit = null
     }
   }
 
   save () {
-    let data = {
-      type: 'FeatureCollection',
-      features: this.items.getLayers().map(layer => {
-        return layer.toGeoJSON()
-      })
-    }
+    let data = this.layer.toGeoJSON()
 
     return JSON.stringify(data, null, '  ')
   }
