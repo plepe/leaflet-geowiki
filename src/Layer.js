@@ -9,16 +9,24 @@ class Layer {
     this.style = {}
   }
 
+  createLayer (featureGroup, layer) {
+    return new Layer(featureGroup, layer)
+  }
+
+  createFeature (featureGroup, layer) {
+    return new Feature(featureGroup, layer)
+  }
+
   load (data) {
     data.features.forEach(feature => {
       let item
 
       switch (feature.type) {
         case 'FeatureCollection':
-          item = new Layer(this.editor, this)
+          item = this.createLayer(this.editor, this)
           break
         case 'Feature':
-          item = new Feature(this.editor, this)
+          item = this.createFeature(this.editor, this)
           break
       }
 
@@ -26,14 +34,6 @@ class Layer {
       this.items.push(item)
           
     })
-  }
-
-  createLayer (leafletLayer) {
-    let item = new Feature(this.editor, this)
-    item.createFrom(leafletLayer)
-    this.items.push(item)
-
-    return item
   }
 
   toGeoJSON () {

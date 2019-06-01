@@ -1,88 +1,50 @@
-/* global L:false */
-const EventEmitter = require('events')
-const ModulekitForm = require('modulekit-form')
+require('leaflet-draw')
 
-const Layer = require('./Layer')
-global.lang_str = {}
+require('./Viewer.js')
+const EditableLayer = require('./EditableLayer')
 
-/**
- * Something changed within the content (feature added, feature modified, feature deleted)
- * @event Editor#change
- * @param {object} event - Event from Leaflet.Draw
- */
+L.GeowikiEditor = L.GeowikiViewer.extend({
+  initialize (options) {
+    L.GeowikiViewer.prototype.initialize(options)
 
-class Editor extends EventEmitter {
-  constructor (options) {
-    super()
-    let dom = options.dom
-    if (typeof options.dom === 'string') {
-      dom = document.getElementById(options.dom)
+    if (typeof options.sidebar === 'string') {
+      this.sidebarDom = document.getElementById(options.sidebar)
+    } else {
+      this.sidebarDom = document.createElement('div')
     }
-
-    let mapDom = document.createElement('div')
-    mapDom.className = 'geowiki-editor-map'
-    dom.appendChild(mapDom)
-
-    this.sidebarDom = document.createElement('div')
     this.sidebarDom.className = 'geowiki-editor-sidebar'
-    dom.appendChild(this.sidebarDom)
+  },
 
-    this.map = L.map(mapDom).setView([ 48.2006, 16.3673 ], 16)
+  createLayer (featureGroup) {
+    return new EditableLayer(featureGroup)
+  },
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map)
+  onAdd (map) {
+    L.GeowikiViewer.prototype.onAdd(map)
 
-    this.layer = new Layer(this)
-
-    this.items = new L.FeatureGroup()
-    this.map.addLayer(this.items)
-    var drawControl = new L.Control.Draw({
+    this.drawControl = new L.Control.Draw({
       draw: {
         polyline: {
           shapeOptions: {}
         },
       },
       edit: {
-        featureGroup: this.items,
+        featureGroup: this,
         edit: false
       }
     })
-    this.map.addControl(drawControl)
+    map.addControl(this.drawControl)
 
-    this.map.on(L.Draw.Event.CREATED, event => {
-      let item = this.layer.createLayer(event.layer)
+    map.on(L.Draw.Event.CREATED, event => {
+      let item = this.currentLayer.leafletCreateLayer(event.layer)
       item.edit()
 
-      this.emit('change', event)
+      this.fire('change', event)
     })
-    this.map.on(L.Draw.Event.DRAWSTART, event => this.disableCurrentEditing())
-    this.map.on(L.Draw.Event.EDITED, event => this.emit('change', event))
-    this.map.on(L.Draw.Event.DELETED, event => this.emit('change', event))
-
-    this.currentEdit = null
-
-    let f = new ModulekitForm('page', {
-      title: {
-        type: 'text',
-        name: 'Title'
-      }
-    })
-    f.show(this.sidebarDom)
-  }
-
-  load (contents) {
-    let data = JSON.parse(contents)
-
-    if (data.type === 'FeatureCollection') {
-      this.layer.load(data)
-    } else if (data.type === 'Feature') {
-      this.layer.load({
-        type: 'FeatureCollection',
-        features: [ data ]
-      })
-    }
-  }
+    map.on(L.Draw.Event.DRAWSTART, event => this.disableCurrentEditing())
+    map.on(L.Draw.Event.EDITED, event => this.fire('change', event))
+    map.on(L.Draw.Event.DELETED, event => this.fire('change', event))
+   },
 
   disableCurrentEditing () {
     if (this.currentEdit) {
@@ -90,12 +52,8 @@ class Editor extends EventEmitter {
       this.currentEdit = null
     }
   }
+})
 
-  save () {
-    let data = this.layer.toGeoJSON()
-
-    return JSON.stringify(data, null, '  ')
-  }
+L.geowikiEditor = (options) => {
+  return new L.GeowikiEditor(options)
 }
-
-module.exports = Editor

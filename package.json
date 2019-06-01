@@ -1,8 +1,8 @@
 {
-  "name": "geowiki-editor",
+  "name": "leaflet-geowiki",
   "version": "0.0.1",
-  "main": "index.js",
-  "repository": "https://github.com/plepe/geowiki-editor",
+  "main": "viewer.js",
+  "repository": "https://github.com/plepe/leaflet-geowiki",
   "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
   "license": "GPL-3.0",
   "scripts": {
@@ -12,6 +12,8 @@
     "standard": "^12.0.1"
   },
   "dependencies": {
+    "leaflet": "^1.5.1",
+    "leaflet-draw": "^1.0.4",
     "modulekit-form": "https://github.com/plepe/modulekit-form#browserify"
   }
 }

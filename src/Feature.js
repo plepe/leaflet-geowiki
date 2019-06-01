@@ -1,6 +1,3 @@
-const ModulekitForm = require('modulekit-form')
-const getLayerForm = require('./getLayerForm')
-
 const applyStyle = require('./applyStyle')
 
 class Feature {
@@ -24,57 +21,12 @@ class Feature {
   }
 
   add () {
-    this.leafletLayer.on('click', e => this.edit())
-
     if (this.leafletLayer.setStyle) {
       applyStyle(this.leafletLayer, this.style)
       this.leafletLayer.setStyle({ editing: {}, original: {} })
     }
 
-    this.editor.items.addLayer(this.leafletLayer)
-  }
-
-  edit () {
-    this.editor.disableCurrentEditing()
-
-    this.leafletLayer.editing.enable()
-    this.editor.currentEdit = this
-
-    this.editor.sidebarDom.innerHTML = ''
-    let f = new ModulekitForm(
-      'data',
-      getLayerForm(this.leafletLayer), {
-        change_on_input: true
-      }
-    )
-
-    f.show(this.editor.sidebarDom)
-
-    f.set_data({
-      properties: this.properties,
-      style: this.style
-    })
-
-    f.onchange = () => {
-      let newData = f.get_data()
-
-      for (let k in newData.properties) {
-        this.properties[k] = newData.properties[k]
-      }
-      for (let k in newData.style) {
-        if (newData.style[k] === null) {
-          delete this.style[k]
-        } else {
-          this.style[k] = newData.style[k]
-        }
-      }
-
-      applyStyle(this.leafletLayer, this.style)
-    }
-  }
-
-  disableEdit () {
-    this.leafletLayer.editing.disable()
+    this.editor.addLayer(this.leafletLayer)
   }
 
   toGeoJSON () {
