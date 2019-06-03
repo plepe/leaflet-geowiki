@@ -43,7 +43,7 @@ L.GeowikiViewer = L.FeatureGroup.extend({
     layer.load(file)
     this.layerTree.push(layer)
 
-    this.currentLayer = layer
+    this._currentLayer = layer
 
     callback(null, layer)
   },

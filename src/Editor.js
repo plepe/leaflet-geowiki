@@ -19,6 +19,17 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     return new EditableLayer(featureGroup)
   },
 
+  currentLayer () {
+    if (!this._currentLayer) {
+      if (!this.layerTree.length) {
+        this.layerTree.push(this.createLayer(this, null))
+      }
+      return this.layerTree[0]
+    }
+
+    return this._currentLayer
+  },
+
   onAdd (map) {
     L.GeowikiViewer.prototype.onAdd(map)
 
@@ -36,7 +47,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     map.addControl(this.drawControl)
 
     map.on(L.Draw.Event.CREATED, event => {
-      let item = this.currentLayer.leafletCreateLayer(event.layer)
+      let item = this.currentLayer().leafletCreateLayer(event.layer)
       item.edit()
 
       this.fire('change', event)
