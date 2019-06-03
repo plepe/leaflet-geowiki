@@ -51,6 +51,15 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
       this.currentEdit.disableEdit()
       this.currentEdit = null
     }
+  },
+
+  save () {
+    return this.layerTree.map((layer, i) => {
+      return {
+        filename: i + '.geojson',
+        contents: layer.toGeoJSON()
+      }
+    })
   }
 })
 
