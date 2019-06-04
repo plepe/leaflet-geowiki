@@ -41,6 +41,13 @@ L.GeowikiViewer = L.FeatureGroup.extend({
       }
     }
 
+    if (!('properties' in contents)) {
+      contents.properties = {}
+    }
+    if (!('name' in contents.properties)) {
+      contents.properties.name = filename
+    }
+
     let layer = this.createLayer(this, null)
     layer.load(contents)
     this.layerTree.push(layer)
