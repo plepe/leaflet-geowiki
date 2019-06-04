@@ -54,6 +54,7 @@ L.GeowikiViewer = L.FeatureGroup.extend({
 
     this._currentLayer = layer
 
+    this.fire('load', layer)
     callback(null, layer)
   },
 

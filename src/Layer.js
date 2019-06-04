@@ -7,6 +7,7 @@ class Layer {
     this.items = []
     this.properties = {}
     this.style = {}
+    this.layerTree = []
   }
 
   createLayer (featureGroup, layer) {
@@ -18,21 +19,24 @@ class Layer {
   }
 
   load (data) {
+    this.properties = data.properties || {}
+    this.style = data.style || {}
+
     data.features.forEach(feature => {
       let item
 
       switch (feature.type) {
         case 'FeatureCollection':
           item = this.createLayer(this.editor, this)
+          this.layerTree.push(item)
           break
         case 'Feature':
           item = this.createFeature(this.editor, this)
+          this.items.push(item)
           break
       }
 
       item.load(feature)
-      this.items.push(item)
-          
     })
   }
 
@@ -49,9 +53,13 @@ class Layer {
       data.style = this.style
     }
 
-    data.features = this.items.map(item => {
+    data.features = this.layerTree.map(item => {
       return item.toGeoJSON()
     })
+
+    data.features = data.features.concat(this.items.map(item => {
+      return item.toGeoJSON()
+    }))
 
     return data
   }

@@ -23,6 +23,7 @@ class EditableFeature extends Feature {
     this.editor.sidebarDom.appendChild(form)
     form.onsubmit = () => {
       this.disableEdit()
+      this.editor.edit()
       return false
     }
 
