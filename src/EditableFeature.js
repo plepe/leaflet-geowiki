@@ -18,6 +18,14 @@ class EditableFeature extends Feature {
     this.editor.currentEdit = this
 
     this.editor.sidebarDom.innerHTML = ''
+
+    let form = document.createElement('form')
+    this.editor.sidebarDom.appendChild(form)
+    form.onsubmit = () => {
+      this.disableEdit()
+      return false
+    }
+
     let f = new ModulekitForm(
       'data',
       getLayerForm(this.leafletLayer), {
@@ -25,7 +33,12 @@ class EditableFeature extends Feature {
       }
     )
 
-    f.show(this.editor.sidebarDom)
+    f.show(form)
+
+    let input = document.createElement('input')
+    input.type = 'submit'
+    input.value = 'Ok'
+    form.appendChild(input)
 
     f.set_data({
       properties: this.properties,
@@ -51,6 +64,7 @@ class EditableFeature extends Feature {
   }
 
   disableEdit () {
+    this.editor.sidebarDom.innerHTML = ''
     this.leafletLayer.editing.disable()
   }
 }
