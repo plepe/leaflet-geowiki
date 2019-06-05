@@ -59,6 +59,10 @@ class Feature {
 
     return data
   }
+
+  refresh () {
+    applyStyle(this.leafletLayer, this.getFullStyle())
+  }
 }
 
 module.exports = Feature

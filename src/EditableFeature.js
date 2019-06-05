@@ -60,7 +60,7 @@ class EditableFeature extends Feature {
         }
       }
 
-      applyStyle(this.leafletLayer, this.style)
+      this.refresh()
     }
   }
 

@@ -85,6 +85,11 @@ class Layer {
 
     return data
   }
+
+  refresh () {
+    this.layerTree.forEach(item => item.refresh())
+    this.items.forEach(item => item.refresh())
+  }
 }
 
 module.exports = Layer

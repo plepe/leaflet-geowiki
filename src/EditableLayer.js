@@ -69,7 +69,7 @@ class EditableLayer extends Layer {
         }
       }
 
-      applyStyle(this.leafletLayer, this.style)
+      this.refresh()
     }
   }
 
