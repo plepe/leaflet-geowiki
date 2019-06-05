@@ -1,4 +1,5 @@
 const applyStyle = require('./applyStyle')
+const defaultStyle = require('./defaultStyle')
 
 class Feature {
   constructor (editor, parent) {
@@ -22,11 +23,26 @@ class Feature {
 
   add () {
     if (this.leafletLayer.setStyle) {
-      applyStyle(this.leafletLayer, this.style)
+      applyStyle(this.leafletLayer, this.getFullStyle())
       this.leafletLayer.setStyle({ editing: {}, original: {} })
     }
 
     this.editor.addLayer(this.leafletLayer)
+  }
+
+  getFullStyle () {
+    let style = {}
+
+    let featureDefaultStyle = defaultStyle(this.leafletLayer)
+    for (let k in featureDefaultStyle) {
+      style[k] = featureDefaultStyle[k]
+    }
+
+    for (let k in this.style) {
+      style[k] = this.style[k]
+    }
+
+    return style
   }
 
   toGeoJSON () {

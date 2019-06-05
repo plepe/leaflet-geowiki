@@ -1,4 +1,3 @@
-const defaultStyle = require('./defaultStyle')
 const leafletMapping = {
   'stroke': 'color',
   'stroke-width': 'weight',
@@ -9,13 +8,6 @@ const leafletMapping = {
 
 module.exports = (layer, style) => {
   let leafletStyle = {}
-  
-  let featureDefaultStyle = defaultStyle(layer)
-  for (let k in featureDefaultStyle) {
-    if (k in leafletMapping) {
-      leafletStyle[leafletMapping[k]] = featureDefaultStyle[k]
-    }
-  }
 
   for (let k in style) {
     if (k in leafletMapping) {
