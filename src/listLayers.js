@@ -1,7 +1,14 @@
 module.exports = function listLayers (layer) {
-  console.log(layer)
   let div = document.createElement('div')
-  div.appendChild(document.createTextNode(layer.properties ? layer.properties.name : 'unnamed'))
+
+  let a = document.createElement('a')
+  a.appendChild(document.createTextNode(layer.properties ? layer.properties.name : 'unnamed'))
+  a.href = '#'
+  a.onclick = () => {
+    layer.edit()
+    return false
+  }
+  div.appendChild(a)
 
   let ul = document.createElement('ul')
   div.appendChild(ul)
