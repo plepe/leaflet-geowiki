@@ -1,5 +1,4 @@
 const applyStyle = require('./applyStyle')
-const defaultStyle = require('./defaultStyle')
 
 class Feature {
   constructor (editor, parent) {
@@ -33,7 +32,7 @@ class Feature {
   getFullStyle () {
     let style = {}
 
-    let featureDefaultStyle = defaultStyle(this.leafletLayer)
+    let featureDefaultStyle = this.parent.getFullStyle()
     for (let k in featureDefaultStyle) {
       style[k] = featureDefaultStyle[k]
     }

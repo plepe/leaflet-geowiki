@@ -1,4 +1,5 @@
 const Feature = require('./Feature')
+const defaultStyle = require('./defaultStyle')
 
 class Layer {
   constructor (editor, parent) {
@@ -38,6 +39,27 @@ class Layer {
 
       item.load(feature)
     })
+  }
+
+  getFullStyle () {
+    let style = {}
+
+    let featureDefaultStyle
+    if (this.parent) {
+      featureDefaultStyle = this.parent.getFullStyle()
+    } else {
+      featureDefaultStyle = defaultStyle(this.leafletLayer)
+    }
+
+    for (let k in featureDefaultStyle) {
+      style[k] = featureDefaultStyle[k]
+    }
+
+    for (let k in this.style) {
+      style[k] = this.style[k]
+    }
+
+    return style
   }
 
   toGeoJSON () {
