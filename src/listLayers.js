@@ -1,6 +1,7 @@
 module.exports = function listLayers (layer) {
   let div = document.createElement('div')
-  let actions = document.createElement('actions')
+  let actions = document.createElement('span')
+  actions.className = 'actions'
   div.appendChild(actions)
 
   let a = document.createElement('a')

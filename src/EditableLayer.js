@@ -93,7 +93,20 @@ class EditableLayer extends Layer {
         let li = document.createElement('li')
         ul.appendChild(li)
 
+        let actions = document.createElement('span')
+        actions.className = 'actions'
+        li.appendChild(actions)
+
         let a = document.createElement('a')
+        a.innerHTML = '<i class="fas fa-eye"></i>'
+        a.href = '#'
+        a.onclick = () => {
+          item.toggleVisibility()
+          return false
+        }
+        actions.appendChild(a)
+
+        a = document.createElement('a')
         a.appendChild(document.createTextNode(item.name()))
         a.href = '#'
         a.onclick = () => {
