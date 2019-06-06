@@ -60,8 +60,33 @@ L.GeowikiViewer = L.FeatureGroup.extend({
 
   createLayer (featureGroup) {
     return new Layer(featureGroup)
-  }
+  },
 
+  /**
+   * returns an array of all layers
+   * @returns Layer[]
+   */
+  allSubLayers () {
+    let result = []
+
+    this.layerTree.forEach(layer =>
+      result = result.concat([ layer ].concat(layer.allSubLayers()))
+    )
+
+    return result
+  },
+
+  /**
+   * returns a hash of all layers, with the path as key and the layer object as value
+   * @returns {Object.<string, Layer>}
+   */
+  allLayers () {
+    let result = {}
+
+    this.allSubLayers().map(layer => result[layer.path()] = layer)
+
+    return result
+  }
 })
 
 L.geowikiViewer = (options) => {

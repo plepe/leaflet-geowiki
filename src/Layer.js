@@ -11,6 +11,14 @@ class Layer {
     this.layerTree = []
   }
 
+  path () {
+    if (this.parent) {
+      return this.parent.path() + '/' + this.parent.layerTree.indexOf(this)
+    } else {
+      return '/' + this.editor.layerTree.indexOf(this)
+    }
+  }
+
   createLayer (featureGroup, layer) {
     return new Layer(featureGroup, layer)
   }
@@ -84,6 +92,16 @@ class Layer {
     }))
 
     return data
+  }
+
+  allSubLayers () {
+    let result = []
+
+    this.layerTree.forEach(layer =>
+      result = result.concat([ layer ].concat(layer.allSubLayers()))
+    )
+
+    return result
   }
 
   refresh () {
