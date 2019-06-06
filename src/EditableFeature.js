@@ -3,6 +3,7 @@ const ModulekitForm = require('modulekit-form')
 const getLayerForm = require('./getLayerForm')
 const Feature = require('./Feature')
 const applyStyle = require('./applyStyle')
+const objectCopy = require('./objectCopy')
 
 class EditableFeature extends Feature {
   add () {
@@ -27,9 +28,19 @@ class EditableFeature extends Feature {
       return false
     }
 
+    let formDef = {
+      layer: {
+        type: 'select',
+        name: 'Layer',
+        values: this.editor.allLayerNames(),
+      }
+    }
+
+    objectCopy(getLayerForm(this.leafletLayer), formDef)
+
     let f = new ModulekitForm(
       'data',
-      getLayerForm(this.leafletLayer), {
+      formDef, {
         change_on_input: true
       }
     )
@@ -42,12 +53,22 @@ class EditableFeature extends Feature {
     form.appendChild(input)
 
     f.set_data({
+      layer: this.parent.path(),
       properties: this.properties,
       style: this.style
     })
 
     f.onchange = () => {
       let newData = f.get_data()
+
+      if (newData.layer !== this.parent.path()) {
+        this.parent.items.splice(this.parent.items.indexOf(this), 1)
+        let layer = this.editor.allLayers()[newData.layer]
+        if (layer) {
+          this.parent = layer
+          layer.items.push(this)
+        }
+      }
 
       for (let k in newData.properties) {
         this.properties[k] = newData.properties[k]
