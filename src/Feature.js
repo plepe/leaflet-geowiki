@@ -7,6 +7,10 @@ class Feature {
     this.isHidden = false
   }
 
+  name () {
+    return this.properties.name || 'unnamed'
+  }
+
   load (data) {
     this.leafletLayer = L.geoJSON(data).getLayers()[0]
     this.properties = this.leafletLayer.feature.properties || {}

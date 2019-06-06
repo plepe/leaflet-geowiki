@@ -3,6 +3,7 @@ const ModulekitForm = require('modulekit-form')
 const getLayerForm = require('./getLayerForm')
 const Layer = require('./Layer')
 const EditableFeature = require('./EditableFeature')
+const listLayers = require('./listLayers')
 
 class EditableLayer extends Layer {
   createLayer (featureGroup, layer) {
@@ -70,6 +71,37 @@ class EditableLayer extends Layer {
       }
 
       this.refresh()
+    }
+
+    if (this.layerTree.length) {
+      let h = document.createElement('h3')
+      h.innerHTML = 'Sublayers'
+      form.appendChild(h)
+
+      form.appendChild(listLayers(this))
+    }
+
+    if (this.items.length) {
+      let h = document.createElement('h3')
+      h.innerHTML = 'Items'
+      form.appendChild(h)
+
+      let ul = document.createElement('ul')
+      form.appendChild(ul)
+
+      this.items.forEach(item => {
+        let li = document.createElement('li')
+        ul.appendChild(li)
+
+        let a = document.createElement('a')
+        a.appendChild(document.createTextNode(item.name()))
+        a.href = '#'
+        a.onclick = () => {
+          item.edit()
+          return false
+        }
+        li.appendChild(a)
+      })
     }
   }
 
