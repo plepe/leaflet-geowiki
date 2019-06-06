@@ -11,6 +11,18 @@ class Layer {
     this.layerTree = []
   }
 
+  name () {
+    if (this.properties.name) {
+      return this.properties.name
+    }
+
+    if (this.parent) {
+      return 'Layer' + ' #' + (this.parent.layerTree.indexOf(this) + 1)
+    }
+
+    return 'unnamed'
+  }
+
   path () {
     if (this.parent) {
       return this.parent.path() + '/' + this.parent.layerTree.indexOf(this)

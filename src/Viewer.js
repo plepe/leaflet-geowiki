@@ -86,6 +86,22 @@ L.GeowikiViewer = L.FeatureGroup.extend({
     this.allSubLayers().map(layer => result[layer.path()] = layer)
 
     return result
+  },
+
+  /**
+   * returns a hash of all layer names, with the path as key and the name as value
+   * @returns {Object.<string, string>}
+   */
+  allLayerNames () {
+    let layers = this.allLayers()
+    let result = {}
+
+    for (let k in layers) {
+      let rec = k.split('/').length - 2
+      result[k] = '> '.repeat(rec) + layers[k].name()
+    }
+
+    return result
   }
 })
 
