@@ -1,7 +1,18 @@
 module.exports = function listLayers (layer) {
   let div = document.createElement('div')
+  let actions = document.createElement('actions')
+  div.appendChild(actions)
 
   let a = document.createElement('a')
+  a.innerHTML = '<i class="fas fa-eye"></i>'
+  a.href = '#'
+  a.onclick = () => {
+    layer.toggleVisibility()
+    return false
+  }
+  actions.appendChild(a)
+
+  a = document.createElement('a')
   a.appendChild(document.createTextNode(layer.name()))
   a.href = '#'
   a.onclick = () => {

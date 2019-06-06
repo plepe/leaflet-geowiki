@@ -4,6 +4,7 @@ class Feature {
   constructor (editor, parent) {
     this.editor = editor
     this.parent = parent
+    this.isHidden = false
   }
 
   load (data) {
@@ -58,6 +59,24 @@ class Feature {
     data.geometry = this.leafletLayer.toGeoJSON().geometry
 
     return data
+  }
+
+  hide () {
+    this.isHidden = true
+    this.leafletLayer.remove()
+  }
+
+  show () {
+    this.isHidden = false
+    this.leafletLayer.addTo(this.editor._map)
+  }
+
+  toggleVisibility () {
+    if (this.isHidden) {
+      this.show()
+    } else {
+      this.hide()
+    }
   }
 
   refresh () {

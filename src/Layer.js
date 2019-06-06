@@ -9,6 +9,7 @@ class Layer {
     this.properties = {}
     this.style = {}
     this.layerTree = []
+    this.isHidden = false
   }
 
   name () {
@@ -114,6 +115,26 @@ class Layer {
     )
 
     return result
+  }
+
+  hide () {
+    this.isHidden = true
+    this.layerTree.forEach(item => item.hide())
+    this.items.forEach(item => item.hide())
+  }
+
+  show () {
+    this.isHidden = false
+    this.layerTree.forEach(item => item.show())
+    this.items.forEach(item => item.show())
+  }
+
+  toggleVisibility () {
+    if (this.isHidden) {
+      this.show()
+    } else {
+      this.hide()
+    }
   }
 
   refresh () {
