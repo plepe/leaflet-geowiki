@@ -7,6 +7,9 @@ const objectCopy = require('./objectCopy')
 class EditableFeature extends Feature {
   add () {
     this.leafletLayer.on('click', e => this.edit())
+    if (this.leafletMarker) {
+      this.leafletMarker.on('click', e => this.edit())
+    }
 
     super.add()
   }

@@ -32,6 +32,13 @@ module.exports = (layer, inheritedValues) => {
           'placeholder': 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
         }
         break
+      case 'marker-type':
+        formDef = {
+          type: 'select',
+          values: { none: 'None', pointer: 'Pointer' },
+          placeholder: 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
+        }
+        break
       default:
         console.log('unknown geojson field type', def.type)
         formDef = {

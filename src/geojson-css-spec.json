@@ -31,5 +31,29 @@
     "type": "length",
     "default": "10",
     "geometry-types": [ "Point" ]
+  },
+  "marker": {
+    "name": "marker type",
+    "type": "marker-type",
+    "default": "none",
+    "geometry-types": [ "Point" ]
+  },
+  "marker-stroke": {
+    "name": "marker stroke",
+    "type": "paint",
+    "default": "#000000",
+    "geometry-types": [ "Point" ]
+  },
+  "marker-stroke-width": {
+    "name": "marker stroke width",
+    "type": "length",
+    "default": "1",
+    "geometry-types": [ "Point" ]
+  },
+  "marker-fill": {
+    "name": "marker fill",
+    "type": "paint",
+    "default": "#f2756a",
+    "geometry-types": [ "Point" ]
   }
 }

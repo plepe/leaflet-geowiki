@@ -1,3 +1,5 @@
+const marker = require('./marker')
+
 const leafletStyleMapping = {
   'stroke': 'color',
   'stroke-width': 'weight',
@@ -22,6 +24,13 @@ class Feature {
     this.leafletLayer = L.geoJSON(data, {
       pointToLayer: (feature, latlng) => L.circleMarker(latlng)
     }).getLayers()[0]
+
+    if (this.leafletLayer.feature.geometry.type === 'Point') {
+      let latlng = this.leafletLayer.getLatLng()
+      this.leafletMarker = L.marker(latlng)
+      this.leafletMarker.addTo(this.editor._map)
+    }
+
     this.properties = this.leafletLayer.feature.properties || {}
     this.style = this.leafletLayer.feature.style || {}
     this.add()
@@ -107,6 +116,10 @@ class Feature {
     leafletStyle.stroke = style.stroke !== 'none'
     leafletStyle.fill = style.fill !== 'none'
     this.leafletLayer.setStyle(leafletStyle)
+
+    if (this.leafletMarker) {
+      this.leafletMarker.setIcon(L.divIcon(marker(style)))
+    }
   }
 }
 
