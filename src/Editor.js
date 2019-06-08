@@ -84,7 +84,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     this.sidebarDom.innerHTML = ''
 
     if (this.layerTree.length) {
-      this.sidebarDom.appendChild(listLayers(this.layerTree[0]))
+      this.sidebarDom.appendChild(listLayers(this))
     }
   }
 })
