@@ -68,6 +68,8 @@ class EditableFeature extends Feature {
           this.parent = layer
           layer.items.push(this)
         }
+
+        this.editor._currentLayer = layer
       }
 
       for (let k in newData.properties) {
