@@ -1,0 +1,29 @@
+{
+  "stroke": {
+    "name": "stroke",
+    "type": "paint",
+    "default": "#7f7f7f"
+  },
+  "stroke-width": {
+    "name": "stroke width",
+    "type": "length",
+    "default": "3"
+  },
+  "stroke-opacity": {
+    "name": "stroke opacity",
+    "type": "opacity",
+    "default": "1"
+  },
+  "fill": {
+    "name": "fill",
+    "type": "paint",
+    "default": "#7f7f7f",
+    "geometry-types": [ "Polygon", "MultiPolygon" ]
+  },
+  "fill-opacity": {
+    "name": "fill opacity",
+    "type": "opacity",
+    "default": "0.3",
+    "geometry-types": [ "Polygon", "MultiPolygon" ]
+  }
+}

@@ -1,4 +1,44 @@
+const spec = require('./geojson-css-spec.json')
+
 module.exports = layer => {
+  let style = {}
+
+  for (let key in spec) {
+    let def = spec[key]
+    let formDef
+
+    switch (def.type) {
+      case 'paint':
+        formDef = {
+          type: 'select_other',
+          'placeholder': 'inherit',
+          'button:other': "Specify color",
+          values: {
+            'none': 'none'
+          },
+          other_def: {
+            type: 'color'
+          }
+        }
+        break
+      case 'length':
+      case 'opacity':
+        formDef = {
+          type: 'float'
+        }
+        break
+      default:
+        console.log('unknown geojson field type', def.type)
+        formDef = {
+          type: 'text'
+        }
+    }
+
+    formDef.name = def.name
+
+    style[key] = formDef
+  }
+
   return {    
     properties: {
       name: 'Properties',
@@ -13,44 +53,7 @@ module.exports = layer => {
     style: {
       name: 'Style',
       type: 'form',
-      def: {
-        'stroke': {
-          name: 'stroke color',
-          type: 'select_other',
-          'placeholder': 'inherit',
-          'button:other': "Specify color",
-          values: {
-            'none': 'none'
-          },
-          other_def: {
-            type: 'color'
-          }
-        },
-        'stroke-width': {
-          type: 'float',
-          name: 'stroke width'
-        },
-        'stroke-opacity': {
-          name: 'stroke opacity',
-          type: 'float'
-        },
-        'fill': {
-          name: 'fill color',
-          type: 'select_other',
-          'placeholder': 'inherit',
-          'button:other': "Specify color",
-          values: {
-            'none': 'none'
-          },
-          other_def: {
-            type: 'color'
-          }
-        },
-        'fill-opacity': {
-          name: 'fill opacity',
-          type: 'float'
-        }
-      }
+      def: style
     }
   }
 }
