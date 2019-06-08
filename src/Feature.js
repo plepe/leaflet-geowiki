@@ -20,6 +20,7 @@ class Feature {
 
   createFrom (leafletLayer) {
     this.leafletLayer = leafletLayer
+    this.leafletLayer.feature = this.leafletLayer.toGeoJSON()
     this.properties = {}
     this.style = {}
     this.add()
@@ -27,7 +28,7 @@ class Feature {
 
   add () {
     if (this.leafletLayer.setStyle) {
-      applyStyle(this.leafletLayer, this.getFullStyle())
+      applyStyle(this.leafletLayer, this.getFullStyle(this.leafletLayer))
       this.leafletLayer.setStyle({ editing: {}, original: {} })
     }
 
@@ -37,7 +38,7 @@ class Feature {
   getFullStyle () {
     let style = {}
 
-    let featureDefaultStyle = this.parent.getFullStyle()
+    let featureDefaultStyle = this.parent.getFullStyle(this.leafletLayer)
     for (let k in featureDefaultStyle) {
       style[k] = featureDefaultStyle[k]
     }

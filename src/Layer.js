@@ -62,14 +62,14 @@ class Layer {
     })
   }
 
-  getFullStyle () {
+  getFullStyle (leafletFeature) {
     let style = {}
 
     let featureDefaultStyle
     if (this.parent) {
-      featureDefaultStyle = this.parent.getFullStyle()
+      featureDefaultStyle = this.parent.getFullStyle(leafletFeature)
     } else {
-      featureDefaultStyle = defaultStyle(this.leafletLayer)
+      featureDefaultStyle = defaultStyle(leafletFeature)
     }
 
     for (let k in featureDefaultStyle) {

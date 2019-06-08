@@ -7,6 +7,10 @@ module.exports = layer => {
     let def = spec[key]
     let formDef
 
+    if (layer && spec[key]['geometry-types'] && !spec[key]['geometry-types'].includes(layer.feature.geometry.type)) {
+      continue
+    }
+
     switch (def.type) {
       case 'paint':
         formDef = {
