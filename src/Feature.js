@@ -1,4 +1,11 @@
-const applyStyle = require('./applyStyle')
+const leafletStyleMapping = {
+  'stroke': 'color',
+  'stroke-width': 'weight',
+  'stroke-opacity': 'opacity',
+  'fill': 'fillColor',
+  'fill-opacity': 'fillOpacity',
+  'radius': 'radius'
+}
 
 class Feature {
   constructor (editor, parent) {
@@ -30,9 +37,10 @@ class Feature {
 
   add () {
     if (this.leafletLayer.setStyle) {
-      applyStyle(this.leafletLayer, this.getFullStyle(this.leafletLayer))
       this.leafletLayer.setStyle({ editing: {}, original: {} })
     }
+
+    this.refresh()
 
     this.editor.addLayer(this.leafletLayer)
   }
@@ -87,7 +95,18 @@ class Feature {
   }
 
   refresh () {
-    applyStyle(this.leafletLayer, this.getFullStyle())
+    let style = this.getFullStyle()
+    let leafletStyle = {}
+
+    for (let k in style) {
+      if (k in leafletStyleMapping) {
+        leafletStyle[leafletStyleMapping[k]] = style[k]
+      }
+    }
+
+    leafletStyle.stroke = style.stroke !== 'none'
+    leafletStyle.fill = style.fill !== 'none'
+    this.leafletLayer.setStyle(leafletStyle)
   }
 }
 

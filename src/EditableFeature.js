@@ -2,7 +2,6 @@ const ModulekitForm = require('modulekit-form')
 
 const getLayerForm = require('./getLayerForm')
 const Feature = require('./Feature')
-const applyStyle = require('./applyStyle')
 const objectCopy = require('./objectCopy')
 
 class EditableFeature extends Feature {
