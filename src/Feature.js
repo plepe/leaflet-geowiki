@@ -12,7 +12,9 @@ class Feature {
   }
 
   load (data) {
-    this.leafletLayer = L.geoJSON(data).getLayers()[0]
+    this.leafletLayer = L.geoJSON(data, {
+      pointToLayer: (feature, latlng) => L.circleMarker(latlng)
+    }).getLayers()[0]
     this.properties = this.leafletLayer.feature.properties || {}
     this.style = this.leafletLayer.feature.style || {}
     this.add()

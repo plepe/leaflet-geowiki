@@ -18,12 +18,18 @@
     "name": "fill",
     "type": "paint",
     "default": "#7f7f7f",
-    "geometry-types": [ "Polygon", "MultiPolygon" ]
+    "geometry-types": [ "Polygon", "MultiPolygon", "Point" ]
   },
   "fill-opacity": {
     "name": "fill opacity",
     "type": "opacity",
     "default": "0.3",
-    "geometry-types": [ "Polygon", "MultiPolygon" ]
+    "geometry-types": [ "Polygon", "MultiPolygon", "Point" ]
+  },
+  "radius": {
+    "name": "radius",
+    "type": "length",
+    "default": "10",
+    "geometry-types": [ "Point" ]
   }
 }

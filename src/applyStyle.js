@@ -3,7 +3,8 @@ const leafletMapping = {
   'stroke-width': 'weight',
   'stroke-opacity': 'opacity',
   'fill': 'fillColor',
-  'fill-opacity': 'fillOpacity'
+  'fill-opacity': 'fillOpacity',
+  'radius': 'radius'
 }
 
 module.exports = (layer, style) => {
