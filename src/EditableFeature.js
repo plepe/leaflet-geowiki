@@ -36,7 +36,7 @@ class EditableFeature extends Feature {
       }
     }
 
-    objectCopy(getLayerForm(this.leafletLayer), formDef)
+    objectCopy(getLayerForm(this.leafletLayer, this.parent.getFullStyle(this.leafletLayer)), formDef)
 
     let f = new ModulekitForm(
       'data',

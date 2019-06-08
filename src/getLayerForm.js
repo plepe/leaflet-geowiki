@@ -1,6 +1,6 @@
 const spec = require('./geojson-css-spec.json')
 
-module.exports = layer => {
+module.exports = (layer, inheritedValues) => {
   let style = {}
 
   for (let key in spec) {
@@ -15,7 +15,7 @@ module.exports = layer => {
       case 'paint':
         formDef = {
           type: 'select_other',
-          'placeholder': 'inherit',
+          'placeholder': 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
           'button:other': "Specify color",
           values: {
             'none': 'none'
@@ -28,7 +28,8 @@ module.exports = layer => {
       case 'length':
       case 'opacity':
         formDef = {
-          type: 'float'
+          type: 'float',
+          'placeholder': 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
         }
         break
       default:

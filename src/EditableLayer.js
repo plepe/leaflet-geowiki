@@ -4,6 +4,7 @@ const getLayerForm = require('./getLayerForm')
 const Layer = require('./Layer')
 const EditableFeature = require('./EditableFeature')
 const listLayers = require('./listLayers')
+const defaultStyle = require('./defaultStyle')
 
 class EditableLayer extends Layer {
   createLayer (featureGroup, layer) {
@@ -39,7 +40,7 @@ class EditableLayer extends Layer {
 
     let f = new ModulekitForm(
       'data',
-      getLayerForm(), {
+      getLayerForm(null, (this.parent ? this.parent.getFullStyle() : defaultStyle())), {
         change_on_input: true
       }
     )
