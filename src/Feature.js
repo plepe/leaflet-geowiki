@@ -37,10 +37,32 @@ class Feature {
   }
 
   createFrom (leafletLayer) {
-    this.leafletLayer = leafletLayer
-    this.leafletLayer.feature = this.leafletLayer.toGeoJSON()
     this.properties = {}
     this.style = {}
+
+    this.leafletLayer = leafletLayer
+    this.leafletLayer.feature = this.leafletLayer.toGeoJSON()
+
+    if (this.leafletLayer.feature.geometry.type === 'Point') {
+      let latlng = this.leafletLayer.getLatLng()
+
+      if (this.leafletLayer.setStyle) { // is circleMarker
+        this.leafletMarker = L.marker(latlng)
+        this.leafletMarker.addTo(this.editor._map)
+      } else {
+        this.leafletMarker = this.leafletLayer
+        this.leafletLayer = L.circleMarker(latlng)
+        this.leafletLayer.feature = this.leafletMarker.feature
+        this.leafletLayer.addTo(this.editor._map)
+
+        this.style = {
+          marker: 'pointer',
+          stroke: 'none',
+          fill: 'none'
+        }
+      }
+    }
+
     this.add()
   }
 
