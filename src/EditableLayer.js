@@ -116,6 +116,31 @@ class EditableLayer extends Layer {
         li.appendChild(a)
       })
     }
+
+    let actions = document.createElement('div')
+    actions.className = 'actions'
+    form.appendChild(actions)
+
+    let h = document.createElement('h3')
+    h.appendChild(document.createTextNode('Actions'))
+    actions.appendChild(h)
+
+    let ul = document.createElement('ul')
+    form.appendChild(ul)
+
+    let li = document.createElement('li')
+    ul.appendChild(li)
+    let a = document.createElement('a')
+    a.innerHTML = '<i class="fas fa-eye"></i> Create new sublayer'
+    a.href = '#'
+    a.onclick = () => {
+      let layer = new EditableLayer(this.editor, this)
+      this.layerTree.push(layer)
+      this.editor._currentLayer = layer
+      layer.edit()
+      return false
+    }
+    li.appendChild(a)
   }
 
   disableEdit () {
