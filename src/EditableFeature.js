@@ -111,6 +111,12 @@ class EditableFeature extends Feature {
     li.appendChild(a)
   }
 
+  notifyModify () {
+    if (this.leafletMarker) {
+      this.leafletMarker.setLatLng(this.leafletLayer.getLatLng())
+    }
+  }
+
   disableEdit () {
     this.editor.sidebarDom.innerHTML = ''
     this.leafletLayer.editing.disable()

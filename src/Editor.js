@@ -60,6 +60,8 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     map.on(L.Draw.Event.DRAWSTART, event => this.disableCurrentEditing())
     map.on(L.Draw.Event.EDITED, event => this.fire('change', event))
     map.on(L.Draw.Event.DELETED, event => this.fire('change', event))
+    map.on(L.Draw.Event.EDITMOVE, event => this.currentEdit.notifyModify(event))
+    map.on(L.Draw.Event.EDITVERTEX, event => this.currentEdit.notifyModify(event))
 
     this.edit()
   },
