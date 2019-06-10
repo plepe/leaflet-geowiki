@@ -1,11 +1,13 @@
 const fs = require('fs')
 const Vue = require('vue')
 
+const template = fs.readFileSync(__dirname + '/listLayers.html', 'utf8')
+
 function showLayer (data) {
   let div = document.createElement('li')
 
   let el = document.createElement('div')
-  el.innerHTML = fs.readFileSync(__dirname + '/listLayers.html', 'utf8')
+  el.innerHTML = template
   div.appendChild(el)
 
   new Vue({ el, data })
