@@ -49,6 +49,8 @@ L.GeowikiViewer = L.FeatureGroup.extend({
     }
 
     let layer = this.createLayer(this, null)
+    this.fire('preload', layer)
+
     layer.load(contents)
     this.layerTree.push(layer)
 

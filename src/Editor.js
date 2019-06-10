@@ -15,9 +15,40 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     }
     this.sidebarDom.className = 'geowiki-editor-sidebar'
 
+    this.on('preload', () => this.closeDefaultFile())
     this.on('load', () => this.edit())
 
-    this.edit()
+    // create an initial empty file
+    this.load('unnamed.geojson', {
+      type: 'FeatureCollection',
+      properties: {},
+      features: [
+        {
+          type: 'FeatureCollection',
+          features: []
+        }
+      ]
+    })
+    this._currentLayer = this.layerTree[0].layerTree[0]
+
+    //this.edit()
+  },
+
+  // only the default file is loaded
+  isOnlyDefaultFile () {
+    return this.layerTree.length === 1 &&
+      this.layerTree[0].layerTree.length === 1 &&
+      this.layerTree[0].layerTree[0].layerTree.length === 0 &&
+      this.layerTree[0].layerTree[0].items.length === 0 &&
+      this.layerTree[0].items.length === 0 &&
+      Object.keys(this.layerTree[0].properties).length === 1 &&
+      Object.keys(this.layerTree[0].style).length === 0
+  },
+
+  closeDefaultFile () {
+    if (this.isOnlyDefaultFile()) {
+      this.layerTree = []
+    }
   },
 
   createLayer (featureGroup) {
