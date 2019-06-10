@@ -1,3 +1,5 @@
+const fs = require('fs')
+const Vue = require('vue')
 const ModulekitForm = require('modulekit-form')
 
 const getLayerForm = require('./getLayerForm')
@@ -5,6 +7,8 @@ const Layer = require('./Layer')
 const EditableFeature = require('./EditableFeature')
 const listLayers = require('./listLayers')
 const defaultStyle = require('./defaultStyle')
+
+const templateItems = fs.readFileSync(__dirname + '/items.html', 'utf8')
 
 class EditableLayer extends Layer {
   createLayer (featureGroup, layer) {
@@ -82,42 +86,11 @@ class EditableLayer extends Layer {
       form.appendChild(listLayers(this))
     }
 
-    if (this.items.length) {
-      let h = document.createElement('h3')
-      h.innerHTML = 'Items'
-      form.appendChild(h)
-
-      let ul = document.createElement('ul')
-      form.appendChild(ul)
-
-      this.items.forEach(item => {
-        let li = document.createElement('li')
-        ul.appendChild(li)
-
-        let actions = document.createElement('span')
-        actions.className = 'actions'
-        li.appendChild(actions)
-
-        let a = document.createElement('a')
-        a.innerHTML = '<i class="fas fa-eye"></i>'
-        a.href = '#'
-        a.title = 'Toggle visibility'
-        a.onclick = () => {
-          item.toggleVisibility()
-          return false
-        }
-        actions.appendChild(a)
-
-        a = document.createElement('a')
-        a.appendChild(document.createTextNode(item.name()))
-        a.href = '#'
-        a.onclick = () => {
-          item.edit()
-          return false
-        }
-        li.appendChild(a)
-      })
-    }
+    // List all items
+    let el = document.createElement('div')
+    form.appendChild(el)
+    el.innerHTML = templateItems
+    new Vue({ el, data: this })
 
     let actions = document.createElement('div')
     actions.className = 'actions'

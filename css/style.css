@@ -14,12 +14,14 @@ ul.leaflet-geowiki li .actions {
   margin-left: -20px;
 }
 
-ul.leaflet-geowiki li div > .actions > a.toggle-vis::before {
+ul.leaflet-geowiki li div > .actions > a.toggle-vis::before,
+ul.leaflet-geowiki li > .actions > a.toggle-vis::before {
   font-family: "Font Awesome 5 Free";
   content: "\f06e";
   font-weight: 900;
 }
-ul.leaflet-geowiki li div.hidden > .actions > a.toggle-vis::before {
+ul.leaflet-geowiki li div.hidden > .actions > a.toggle-vis::before,
+ul.leaflet-geowiki li.hidden > .actions > a.toggle-vis::before {
   font-family: "Font Awesome 5 Free";
   content: "\f070";
   font-weight: 900;
