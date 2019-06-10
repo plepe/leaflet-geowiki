@@ -1,0 +1,6 @@
+<div v-bind:class="{ hidden: isHidden }">
+  <span class="actions">
+    <a href="#" v-on:click="$data.toggleVisibility()" class="toggle-vis"></a>
+  </span>
+  <a href="#" v-on:click="$data.edit()">{{ $data.name() }}</a>
+</div>
