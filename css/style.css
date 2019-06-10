@@ -9,20 +9,26 @@ ul.leaflet-geowiki  {
 ul.leaflet-geowiki li {
   list-style-type: none;
 }
-ul.leaflet-geowiki li .actions {
+ul.leaflet-geowiki li .actions,
+ul.leaflet-geowiki.actions li i {
   margin-right: 0.5em;
   margin-left: -20px;
 }
 
 ul.leaflet-geowiki li div > .actions > a.toggle-vis::before,
-ul.leaflet-geowiki li > .actions > a.toggle-vis::before {
+ul.leaflet-geowiki > li > .actions > a.toggle-vis::before {
   font-family: "Font Awesome 5 Free";
   content: "\f06e";
   font-weight: 900;
 }
 ul.leaflet-geowiki li div.hidden > .actions > a.toggle-vis::before,
-ul.leaflet-geowiki li.hidden > .actions > a.toggle-vis::before {
+ul.leaflet-geowiki.hidden > li > .actions > a.toggle-vis::before {
   font-family: "Font Awesome 5 Free";
   content: "\f070";
+  font-weight: 900;
+}
+ul.leaflet-geowiki > li > .actions > a.create-sublayer::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0fe";
   font-weight: 900;
 }

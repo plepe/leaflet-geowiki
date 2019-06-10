@@ -8,7 +8,7 @@ const EditableFeature = require('./EditableFeature')
 const listLayers = require('./listLayers')
 const defaultStyle = require('./defaultStyle')
 
-const templateItems = fs.readFileSync(__dirname + '/items.html', 'utf8')
+const template = fs.readFileSync(__dirname + '/EditableLayer.html', 'utf8')
 
 class EditableLayer extends Layer {
   createLayer (featureGroup, layer) {
@@ -89,44 +89,16 @@ class EditableLayer extends Layer {
     // List all items
     let el = document.createElement('div')
     form.appendChild(el)
-    el.innerHTML = templateItems
-    new Vue({ el, data: this })
-
-    let actions = document.createElement('div')
-    actions.className = 'actions'
-    form.appendChild(actions)
-
-    let h = document.createElement('h3')
-    h.appendChild(document.createTextNode('Actions'))
-    actions.appendChild(h)
-
-    let ul = document.createElement('ul')
-    form.appendChild(ul)
-
-    let li = document.createElement('li')
-    ul.appendChild(li)
-    let a = document.createElement('a')
-    a.innerHTML = '<i class="fas fa-plus"></i> Create new sublayer'
-    a.href = '#'
-    a.onclick = () => {
-      let layer = new EditableLayer(this.editor, this)
-      this.layerTree.push(layer)
-      this.editor._currentLayer = layer
-      layer.edit()
-      return false
-    }
-    li.appendChild(a)
-
-    li = document.createElement('li')
-    ul.appendChild(li)
-    a = document.createElement('a')
-    a.innerHTML = '<i class="fas fa-eye"></i> Toggle visibility'
-    a.href = '#'
-    a.onclick = () => {
-      this.toggleVisibility()
-      return false
-    }
-    li.appendChild(a)
+    el.innerHTML = template
+    new Vue({ el, data: this, methods: {
+      createSublayer: () => {
+        let layer = new EditableLayer(this.editor, this)
+        this.layerTree.push(layer)
+        this.editor._currentLayer = layer
+        layer.edit()
+        return false
+      }
+    }})
   }
 
   disableEdit () {

@@ -1,9 +1,0 @@
-<h3 v-if="$data.items.length">Items</h3>
-<ul v-if="$data.items.length" class="leaflet-geowiki">
-  <li v-for="item in $data.items" v-bind:class="{ hidden: item.isHidden }">
-    <span class="actions">
-      <a href="#" v-on:click="item.toggleVisibility()" class="toggle-vis"></a>
-    </span>
-    <a href="#" v-on:click="item.edit()">{{ item.name() }}</a>
-  </li>
-</ul>
