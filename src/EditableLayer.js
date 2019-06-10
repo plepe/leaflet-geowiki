@@ -101,6 +101,7 @@ class EditableLayer extends Layer {
         let a = document.createElement('a')
         a.innerHTML = '<i class="fas fa-eye"></i>'
         a.href = '#'
+        a.title = 'Toggle visibility'
         a.onclick = () => {
           item.toggleVisibility()
           return false
@@ -132,13 +133,24 @@ class EditableLayer extends Layer {
     let li = document.createElement('li')
     ul.appendChild(li)
     let a = document.createElement('a')
-    a.innerHTML = '<i class="fas fa-eye"></i> Create new sublayer'
+    a.innerHTML = '<i class="fas fa-plus"></i> Create new sublayer'
     a.href = '#'
     a.onclick = () => {
       let layer = new EditableLayer(this.editor, this)
       this.layerTree.push(layer)
       this.editor._currentLayer = layer
       layer.edit()
+      return false
+    }
+    li.appendChild(a)
+
+    li = document.createElement('li')
+    ul.appendChild(li)
+    a = document.createElement('a')
+    a.innerHTML = '<i class="fas fa-eye"></i> Toggle visibility'
+    a.href = '#'
+    a.onclick = () => {
+      this.toggleVisibility()
       return false
     }
     li.appendChild(a)
