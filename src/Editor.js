@@ -110,7 +110,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
   save () {
     return this.layerTree.map((layer, i) => {
       return {
-        filename: i + '.geojson',
+        filename: layer.filename || 'unnamed.geojson',
         contents: JSON.stringify(layer.toGeoJSON(), null, '  ')
       }
     })
