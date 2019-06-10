@@ -15,7 +15,10 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     }
     this.sidebarDom.className = 'geowiki-editor-sidebar'
 
-    this.on('preload', () => this.closeDefaultFile())
+    this.on('preload', () => {
+      this.disableCurrentEditing()
+      this.closeDefaultFile()
+    })
     this.on('load', () => this.edit())
 
     // create an initial empty file
