@@ -2,3 +2,25 @@
   background: none;
   border: none;
 }
+ul.leaflet-geowiki  {
+  padding-left: 20px;
+  margin: 0 0;
+}
+ul.leaflet-geowiki li {
+  list-style-type: none;
+}
+ul.leaflet-geowiki li .actions {
+  margin-right: 0.5em;
+  margin-left: -20px;
+}
+
+ul.leaflet-geowiki li div > .actions > a.toggle-vis::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f06e";
+  font-weight: 900;
+}
+ul.leaflet-geowiki li div.hidden > .actions > a.toggle-vis::before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f070";
+  font-weight: 900;
+}
