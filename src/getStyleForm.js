@@ -51,21 +51,5 @@ module.exports = (layer, inheritedValues) => {
     style[key] = formDef
   }
 
-  return {    
-    properties: {
-      name: 'Properties',
-      type: 'form',
-      def: {
-        name: {
-          type: 'text',
-          name: 'Name'
-        }
-      }
-    },
-    style: {
-      name: 'Style',
-      type: 'form',
-      def: style
-    }
-  }
+  return style
 }

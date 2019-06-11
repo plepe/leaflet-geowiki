@@ -1,6 +1,6 @@
 const ModulekitForm = require('modulekit-form')
 
-const getLayerForm = require('./getLayerForm')
+const getStyleForm = require('./getStyleForm')
 const Layer = require('./Layer')
 const EditableFeature = require('./EditableFeature')
 const listLayers = require('./listLayers')
@@ -43,9 +43,27 @@ class EditableLayer extends Layer {
       return false
     }
 
+    let formDef = {
+      properties: {
+        type: 'form',
+        name: 'Properties',
+        def: {
+          name: {
+            type: 'text',
+            name: 'Name'
+          }
+        }
+      },
+      style: {
+        name: 'Style for Features in this layer',
+        type: 'form',
+        def: getLayerForm(null, (this.parent ? this.parent.getFullStyle() : defaultStyle()))
+      }
+    }
+
     let f = new ModulekitForm(
       'data',
-      getLayerForm(null, (this.parent ? this.parent.getFullStyle() : defaultStyle())), {
+      formDef, {
         change_on_input: true
       }
     )

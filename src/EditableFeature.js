@@ -1,6 +1,6 @@
 const ModulekitForm = require('modulekit-form')
 
-const getLayerForm = require('./getLayerForm')
+const getStyleForm = require('./getStyleForm')
 const Feature = require('./Feature')
 const objectCopy = require('./objectCopy')
 
@@ -40,10 +40,20 @@ class EditableFeature extends Feature {
         type: 'select',
         name: 'Layer',
         values: this.editor.allLayerNames(),
+      },
+      properties: {
+        type: 'hash',
+        name: 'Properties',
+        def: {
+          type: 'text'
+        }
+      },
+      style: {
+        name: 'Style',
+        type: 'form',
+        def: getStyleForm(this.leafletLayer, this.parent.getFullStyle(this.leafletLayer))
       }
     }
-
-    objectCopy(getLayerForm(this.leafletLayer, this.parent.getFullStyle(this.leafletLayer)), formDef)
 
     let f = new ModulekitForm(
       'data',
