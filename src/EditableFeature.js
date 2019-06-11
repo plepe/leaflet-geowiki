@@ -22,6 +22,11 @@ class EditableFeature extends Feature {
 
     this.editor.sidebarDom.innerHTML = ''
 
+    let header = document.createElement('h2')
+    header.appendChild(document.createTextNode("Edit Feature "))
+    header.appendChild(document.createTextNode(this.name()))
+    this.editor.sidebarDom.appendChild(header)
+
     let form = document.createElement('form')
     this.editor.sidebarDom.appendChild(form)
     form.onsubmit = () => {
@@ -84,6 +89,10 @@ class EditableFeature extends Feature {
           this.style[k] = newData.style[k]
         }
       }
+
+      header.innerHTML = ''
+      header.appendChild(document.createTextNode("Edit "))
+      header.appendChild(document.createTextNode(this.name()))
 
       this.refresh()
     }

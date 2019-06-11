@@ -31,6 +31,11 @@ class EditableLayer extends Layer {
 
     this.editor.sidebarDom.innerHTML = ''
 
+    let header = document.createElement('h2')
+    header.appendChild(document.createTextNode("Edit "))
+    header.appendChild(document.createTextNode(this.name()))
+    this.editor.sidebarDom.appendChild(header)
+
     let form = document.createElement('form')
     this.editor.sidebarDom.appendChild(form)
     form.onsubmit = () => {
@@ -70,6 +75,10 @@ class EditableLayer extends Layer {
           this.style[k] = newData.style[k]
         }
       }
+
+      header.innerHTML = ''
+      header.appendChild(document.createTextNode("Edit "))
+      header.appendChild(document.createTextNode(this.name()))
 
       this.refresh()
     }
