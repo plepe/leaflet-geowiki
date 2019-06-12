@@ -1,4 +1,5 @@
 const marker = require('./marker')
+const spec = require('./geojson-css-spec.json')
 
 const leafletStyleMapping = {
   'stroke': 'color',
@@ -139,7 +140,9 @@ class Feature {
     }
 
     leafletStyle.stroke = style.stroke !== 'none'
-    leafletStyle.fill = style.fill !== 'none'
+    if (spec['fill']['geometry-types'].includes(this.leafletLayer.feature.geometry.type)) {
+      leafletStyle.fill = style.fill !== 'none'
+    }
     this.leafletLayer.setStyle(leafletStyle)
 
     if (this.leafletMarker) {
