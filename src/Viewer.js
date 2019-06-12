@@ -1,6 +1,7 @@
 /* global L:false */
 
 const Layer = require('./Layer')
+const importUmap = require('./importUmap')
 global.lang_str = {}
 
 L.GeowikiViewer = L.FeatureGroup.extend({
@@ -39,6 +40,10 @@ L.GeowikiViewer = L.FeatureGroup.extend({
       } catch (e) {
         return callback(e)
       }
+    }
+
+    if (filename.match(/\.umap$/)) {
+      contents = importUmap(contents)
     }
 
     if (!('properties' in contents)) {
