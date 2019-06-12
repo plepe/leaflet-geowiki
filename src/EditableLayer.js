@@ -218,6 +218,40 @@ class EditableLayer extends Layer {
       return false
     }
     li.appendChild(a)
+
+    li = document.createElement('li')
+    ul.appendChild(li)
+    a = document.createElement('a')
+    if (this.parent) {
+      a.innerHTML = '<i class="fas fa-trash-alt"></i> Delete layer and contents'
+    } else {
+      a.innerHTML = '<i class="fas fa-window-close"></i> Close file'
+    }
+    a.href = '#'
+    a.onclick = () => {
+      this.remove()
+      this.editor.edit()
+      return false
+    }
+    li.appendChild(a)
+  }
+
+  remove () {
+    this.layerTree.concat().forEach(item => item.remove())
+    this.items.concat().forEach(item => item.remove())
+    if (this.parent) {
+      this.parent._removeLayer(this)
+    } else {
+      this.editor._closeFile(this)
+    }
+  }
+
+  _removeLayer (item) {
+    this.layerTree.splice(this.layerTree.indexOf(item), 1)
+  }
+
+  _removeFeature (item) {
+    this.items.splice(this.items.indexOf(item), 1)
   }
 
   disableEdit () {

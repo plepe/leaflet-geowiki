@@ -126,6 +126,18 @@ class EditableFeature extends Feature {
       return false
     }
     li.appendChild(a)
+
+    li = document.createElement('li')
+    ul.appendChild(li)
+    a = document.createElement('a')
+    a.innerHTML = '<i class="fas fa-trash-alt"></i> Delete feature'
+    a.href = '#'
+    a.onclick = () => {
+      this.remove()
+      this.editor.edit()
+      return false
+    }
+    li.appendChild(a)
   }
 
   notifyModify () {
@@ -137,6 +149,11 @@ class EditableFeature extends Feature {
   disableEdit () {
     this.editor.sidebarDom.innerHTML = ''
     this.leafletLayer.editing.disable()
+  }
+
+  remove () {
+    this.leafletLayer.remove()
+    this.parent._removeFeature(this)
   }
 }
 

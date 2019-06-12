@@ -122,6 +122,10 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     if (this.layerTree.length) {
       this.sidebarDom.appendChild(listLayers(this))
     }
+  },
+
+  _closeFile (item) {
+    this.layerTree.splice(this.layerTree.indexOf(item), 1)
   }
 })
 
