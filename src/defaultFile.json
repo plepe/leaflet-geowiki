@@ -1,0 +1,10 @@
+{
+  "type": "FeatureCollection",
+  "properties": {},
+  "features": [
+    {
+      "type": "FeatureCollection",
+      "features": []
+    }
+  ]
+}

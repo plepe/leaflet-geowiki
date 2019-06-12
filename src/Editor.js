@@ -22,16 +22,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     this.on('load', () => this.edit())
 
     // create an initial empty file
-    this.load('unnamed.geojson', {
-      type: 'FeatureCollection',
-      properties: {},
-      features: [
-        {
-          type: 'FeatureCollection',
-          features: []
-        }
-      ]
-    })
+    this.load('unnamed.geojson', require('./defaultFile.json'))
     this._currentLayer = this.layerTree[0].layerTree[0]
 
     //this.edit()
