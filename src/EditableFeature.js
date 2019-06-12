@@ -42,11 +42,9 @@ class EditableFeature extends Feature {
         values: this.editor.allLayerNames(),
       },
       properties: {
-        type: 'hash',
+        type: 'form',
         name: 'Properties',
-        def: {
-          type: 'text'
-        }
+        def: this.parent.featureFields
       },
       style: {
         name: 'Style',

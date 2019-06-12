@@ -43,22 +43,55 @@ class EditableLayer extends Layer {
       return false
     }
 
-    let formDef = {
-      properties: {
-        type: 'form',
-        name: 'Properties',
-        def: {
-          name: {
-            type: 'text',
-            name: 'Name'
+    let formDef = {}
+    formDef.properties = {
+      type: 'form',
+      name: 'Properties',
+      def: {
+        name: {
+          type: 'text',
+          name: 'Name'
+        }
+      }
+    }
+
+    if (!this.parent) {
+      formDef.featureFields = {
+        'type': 'hash',
+        'name': 'Fields',
+        'desc': 'Define which fields should be collected for each map feature',
+        'default': 1,
+        'button:add_element': 'Add another field',
+        'key_def': {
+          'type': 'text',
+          'name': 'Key'
+        },
+        'def': {
+          'type': 'form',
+          'def': {
+            'name': {
+              'type': 'text',
+              'name': 'Name',
+              'weight': -1
+            },
+            'type': {
+              'type': 'select',
+              'name': 'Type',
+              'values': {
+                'text': 'Text, single line',
+                'textarea': 'Text, multiple lines'
+              },
+              'default': 'text'
+            }
           }
         }
-      },
-      style: {
-        name: 'Style for Features in this layer',
-        type: 'form',
-        def: getLayerForm(null, (this.parent ? this.parent.getFullStyle() : defaultStyle()))
       }
+    }
+
+    formDef.style = {
+      name: 'Style for Features in this layer',
+      type: 'form',
+      def: getStyleForm(null, this.parent ? this.parent.getFullStyle() : defaultStyle())
     }
 
     let f = new ModulekitForm(
@@ -76,6 +109,7 @@ class EditableLayer extends Layer {
     form.appendChild(input)
 
     f.set_data({
+      featureFields: this.featureFields,
       properties: this.properties,
       style: this.style
     })
@@ -83,6 +117,9 @@ class EditableLayer extends Layer {
     f.onchange = () => {
       let newData = f.get_data()
 
+      if (newData.featureFields) {
+        this.featureFields = newData.featureFields
+      }
       for (let k in newData.properties) {
         this.properties[k] = newData.properties[k]
       }

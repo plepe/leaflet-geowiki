@@ -6,6 +6,7 @@ class Layer {
     this.editor = editor
     this.parent = parent
     this.items = []
+    this.featureFields = this.parent ? this.parent.featureFields : require('./defaultFields.json')
     this.properties = {}
     this.style = {}
     this.layerTree = []
@@ -43,6 +44,9 @@ class Layer {
   load (data) {
     this.properties = data.properties || {}
     this.style = data.style || {}
+    if (data.featureFields) {
+      this.featureFields = data.featureFields
+    }
 
     data.features.forEach(feature => {
       let item
@@ -90,6 +94,10 @@ class Layer {
 
     if (Object.keys(this.properties).length) {
       data.properties = this.properties
+    }
+
+    if (!this.parent) {
+      data.featureFields = this.featureFields
     }
 
     if (Object.keys(this.style).length) {
