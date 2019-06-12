@@ -94,8 +94,11 @@ class Feature {
   toGeoJSON () {
     let data = { type: 'Feature' }
 
-    if (Object.keys(this.properties).length) {
-      data.properties = this.properties
+    data.properties = {}
+    for (let k in this.properties) {
+      if (this.properties[k] !== null) {
+        data.properties[k] = this.properties[k]
+      }
     }
 
     if (Object.keys(this.style).length) {
