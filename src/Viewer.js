@@ -13,11 +13,16 @@ L.GeowikiViewer = L.FeatureGroup.extend({
   },
 
   load (filename, contents, callback) {
+    if (typeof contents === 'function') {
+      callback = contents
+      contents = null
+    }
+
     if (!callback) {
       callback = () => {}
     }
 
-    if (typeof contents === null) {
+    if (contents == null) {
       let req = new window.XMLHttpRequest()
       req.open('GET', filename)
       req.overrideMimeType('application/json')
