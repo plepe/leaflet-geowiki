@@ -22,7 +22,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     this.on('load', () => this.edit())
 
     // create an initial empty file
-    this.load('unnamed.geojson', require('./defaultFile.json'))
+    this.load('unnamed.geowiki', require('./defaultFile.json'))
     this._currentLayer = this.layerTree[0].layerTree[0]
 
     //this.edit()
@@ -101,7 +101,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
   save () {
     return this.layerTree.map((layer, i) => {
       return {
-        filename: layer.filename || 'unnamed.geojson',
+        filename: layer.filename || 'unnamed.geowiki',
         contents: JSON.stringify(layer.toGeoJSON(), null, '  ')
       }
     })
