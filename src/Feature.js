@@ -94,6 +94,48 @@ class Feature {
     return style
   }
 
+  renderPopup () {
+    let div = document.createElement('div')
+    let hasContent = false
+
+    if (this.properties.name) {
+      let d = document.createElement('h4')
+      d.appendChild(document.createTextNode(this.properties.name))
+      div.appendChild(d)
+      hasContent = true
+    }
+
+    if (this.properties.description) {
+      let d = document.createElement('div')
+      d.appendChild(document.createTextNode(this.properties.name.replace(/\n/g, "<br>\n")))
+      div.appendChild(d)
+      hasContent = true
+    }
+
+    for (let k in this.parent.featureFields) {
+      if (k === 'name' || k === 'description' || !this.properties[k]) {
+        continue
+      }
+
+      let d = document.createElement('div')
+      let b = document.createElement('b')
+      b.appendChild(document.createTextNode(this.parent.featureFields[k].name) + ': ')
+      d.appendChild(b)
+
+      let v = document.createElement('span')
+      v.appendChild(document.createTextNode(this.properties[k]))
+      d.appendChild(v)
+      div.appendChild(d)
+      hasContent = true
+    }
+
+    if (!hasContent) {
+      return null
+    }
+
+    return div
+  }
+
   toGeoJSON () {
     let data = { type: 'Feature' }
 
@@ -133,6 +175,7 @@ class Feature {
 
   refresh () {
     let style = this.getFullStyle()
+    let popupContent = this.renderPopup()
     let leafletStyle = {}
 
     for (let k in style) {
@@ -146,9 +189,16 @@ class Feature {
       leafletStyle.fill = style.fill !== 'none'
     }
     this.leafletLayer.setStyle(leafletStyle)
+    if (popupContent) {
+      this.leafletLayer.bindPopup(popupContent)
+    }
 
     if (this.leafletMarker) {
       this.leafletMarker.setIcon(L.divIcon(marker(style)))
+
+      if (popupContent) {
+        this.leafletMarker.bindPopup(popupContent)
+      }
     }
   }
 }

@@ -154,6 +154,10 @@ class EditableFeature extends Feature {
     this.leafletLayer.remove()
     this.parent._removeFeature(this)
   }
+
+  renderPopup () {
+    return null
+  }
 }
 
 module.exports = EditableFeature
