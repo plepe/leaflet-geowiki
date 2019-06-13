@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="dist/leaflet-geowiki.css"/>
+    <script src="node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="dist/leaflet-geowiki.js"></script>
+  </head>
+  <body>
+    <div id='map' style='position: absolute; top: 0; left: 0; right: 0px; bottom: 0;'></div>
+  </body>
+  <script>
+// Create Leaflet map object
+var map = L.map('map')
+
+// Use OSM tiles as background
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map)
+
+// Load example file
+var geowiki = L.geowikiViewer().addTo(map)
+geowiki.load('example.geowiki', function (err) {
+  if (err) { return alert(err) }
+  map.fitBounds(geowiki.getBounds())
+})
+  </script>
+</html>

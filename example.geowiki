@@ -1,0 +1,163 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "name": "example.geowiki",
+    "license": "CC0-1.0"
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": null
+      },
+      "style": {
+        "stroke": "#ff0000",
+        "stroke-width": 3,
+        "fill": "none",
+        "stroke-opacity": 0.8
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            16.363428,
+            48.200222
+          ],
+          [
+            16.365788,
+            48.202024
+          ],
+          [
+            16.370058,
+            48.201223
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Test"
+      },
+      "style": {
+        "stroke": "#7f7f7f",
+        "stroke-width": "3",
+        "fill": "none"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            16.364973,
+            48.200308
+          ],
+          [
+            16.367204,
+            48.19862
+          ],
+          [
+            16.370251,
+            48.198977
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "test"
+      },
+      "style": {
+        "stroke-width": 3,
+        "stroke-opacity": 1,
+        "fill": "#ff0000",
+        "fill-opacity": 0.2
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16.368814,
+              48.20211
+            ],
+            [
+              16.368814,
+              48.203311
+            ],
+            [
+              16.370294,
+              48.203311
+            ],
+            [
+              16.370294,
+              48.20211
+            ],
+            [
+              16.368814,
+              48.20211
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": null
+      },
+      "style": {
+        "stroke": "#00ff00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              16.365101,
+              48.201352
+            ],
+            [
+              16.365101,
+              48.202839
+            ],
+            [
+              16.366668,
+              48.202839
+            ],
+            [
+              16.366668,
+              48.201352
+            ],
+            [
+              16.365101,
+              48.201352
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": null
+      },
+      "style": {
+        "stroke": "#ff9900"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            16.365831,
+            48.20354
+          ],
+          [
+            16.369801,
+            48.199979
+          ]
+        ]
+      }
+    }
+  ]
+}
