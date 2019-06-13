@@ -43,6 +43,11 @@ class EditableLayer extends Layer {
       return false
     }
 
+    let licenses = require('spdx-license-list')
+    for (let k in licenses) {
+      licenses[k].desc = '<a target="_blank" href="' + licenses[k].url + '">' + licenses[k].url + '</a>'
+    }
+
     let formDef = {}
     formDef.properties = {
       type: 'form',
@@ -51,6 +56,16 @@ class EditableLayer extends Layer {
         name: {
           type: 'text',
           name: 'Name'
+        },
+        description: {
+          type: 'textarea',
+          name: 'Description'
+        },
+        license: {
+          type: 'select',
+          name: 'License',
+          placeholder: 'unspecified',
+          values: licenses
         }
       }
     }
