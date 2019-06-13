@@ -1,5 +1,7 @@
 # leaflet-geowiki
-A LeafletJS plugin for displaying and creating styled maps.
+A LeafletJS plugin for displaying and creating styled maps. Read more about the [Geowiki suite on the blog](https://geowiki.net).
+
+Geowiki files are valid GeoJSON files, with style information added. See the [Geowiki file format specification](https://github.com/plepe/geowiki-spec) for details.
 
 ## Installation
 ```sh
