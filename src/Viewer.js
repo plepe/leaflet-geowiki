@@ -1,4 +1,4 @@
-/* global L:false */
+/* global L:false, define:false */
 
 const Layer = require('./Layer')
 const importUmap = require('./importUmap')
@@ -82,9 +82,9 @@ L.GeowikiViewer = L.FeatureGroup.extend({
   allSubLayers () {
     let result = []
 
-    this.layerTree.forEach(layer =>
+    this.layerTree.forEach(layer => {
       result = result.concat([ layer ].concat(layer.allSubLayers()))
-    )
+    })
 
     return result
   },
@@ -96,7 +96,9 @@ L.GeowikiViewer = L.FeatureGroup.extend({
   allLayers () {
     let result = {}
 
-    this.allSubLayers().map(layer => result[layer.path()] = layer)
+    this.allSubLayers().forEach(layer => {
+      result[layer.path()] = layer
+    })
 
     return result
   },
@@ -123,7 +125,7 @@ L.geowikiViewer = (options) => {
 }
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
-  module.exports = L;
+  module.exports = L
 } else if (typeof define === 'function' && define.amd) {
-  define(L);
+  define(L)
 }

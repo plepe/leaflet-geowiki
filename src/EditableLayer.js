@@ -32,7 +32,7 @@ class EditableLayer extends Layer {
     this.editor.sidebarDom.innerHTML = ''
 
     let header = document.createElement('h2')
-    header.appendChild(document.createTextNode("Edit "))
+    header.appendChild(document.createTextNode('Edit '))
     header.appendChild(document.createTextNode(this.name()))
     this.editor.sidebarDom.appendChild(header)
 
@@ -147,7 +147,7 @@ class EditableLayer extends Layer {
       }
 
       header.innerHTML = ''
-      header.appendChild(document.createTextNode("Edit "))
+      header.appendChild(document.createTextNode('Edit '))
       header.appendChild(document.createTextNode(this.name()))
 
       this.refresh()

@@ -118,9 +118,9 @@ class Layer {
   allSubLayers () {
     let result = []
 
-    this.layerTree.forEach(layer =>
+    this.layerTree.forEach(layer => {
       result = result.concat([ layer ].concat(layer.allSubLayers()))
-    )
+    })
 
     return result
   }

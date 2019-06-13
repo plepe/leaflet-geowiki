@@ -15,8 +15,8 @@ module.exports = (layer, inheritedValues) => {
       case 'paint':
         formDef = {
           type: 'select_other',
-          'placeholder': 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
-          'button:other': "Specify color",
+          'placeholder': 'inherit' + (inheritedValues ? ' (' + inheritedValues[key] + ')' : ''),
+          'button:other': 'Specify color',
           values: {
             'none': 'none'
           },
@@ -29,14 +29,14 @@ module.exports = (layer, inheritedValues) => {
       case 'opacity':
         formDef = {
           type: 'float',
-          'placeholder': 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
+          'placeholder': 'inherit' + (inheritedValues ? ' (' + inheritedValues[key] + ')' : '')
         }
         break
       case 'marker-type':
         formDef = {
           type: 'select',
           values: { none: 'None', pointer: 'Pointer' },
-          placeholder: 'inherit' + (inheritedValues ? ' (' +  inheritedValues[key] + ')' : ''),
+          placeholder: 'inherit' + (inheritedValues ? ' (' + inheritedValues[key] + ')' : '')
         }
         break
       default:

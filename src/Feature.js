@@ -1,3 +1,5 @@
+/* global L:false */
+
 const marker = require('./marker')
 const spec = require('./geojson-css-spec.json')
 

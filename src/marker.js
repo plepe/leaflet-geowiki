@@ -3,10 +3,6 @@ module.exports = (options) => {
     return {}
   }
 
-  let color = '#000000'
-  let width = 1
-  let fillColor = '#ff0000'
-
   if (options.marker === 'pointer') {
     return {
       className: 'leaflet-geowiki-icon',

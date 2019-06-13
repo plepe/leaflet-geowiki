@@ -1,3 +1,5 @@
+/* global L:false */
+
 require('leaflet-draw')
 
 require('./Viewer.js')
@@ -25,7 +27,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     this.load('unnamed.geowiki', require('./defaultFile.json'))
     this._currentLayer = this.layerTree[0].layerTree[0]
 
-    //this.edit()
+    // this.edit()
   },
 
   // only the default file is loaded
@@ -67,7 +69,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
       draw: {
         polyline: {
           shapeOptions: {}
-        },
+        }
       },
       edit: {
         featureGroup: this,

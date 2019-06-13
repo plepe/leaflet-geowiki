@@ -2,7 +2,6 @@ const ModulekitForm = require('modulekit-form')
 
 const getStyleForm = require('./getStyleForm')
 const Feature = require('./Feature')
-const objectCopy = require('./objectCopy')
 
 class EditableFeature extends Feature {
   add () {
@@ -23,7 +22,7 @@ class EditableFeature extends Feature {
     this.editor.sidebarDom.innerHTML = ''
 
     let header = document.createElement('h2')
-    header.appendChild(document.createTextNode("Edit Feature "))
+    header.appendChild(document.createTextNode('Edit Feature '))
     header.appendChild(document.createTextNode(this.name()))
     this.editor.sidebarDom.appendChild(header)
 
@@ -39,7 +38,7 @@ class EditableFeature extends Feature {
       layer: {
         type: 'select',
         name: 'Layer',
-        values: this.editor.allLayerNames(),
+        values: this.editor.allLayerNames()
       },
       properties: {
         type: 'form',
@@ -99,7 +98,7 @@ class EditableFeature extends Feature {
       }
 
       header.innerHTML = ''
-      header.appendChild(document.createTextNode("Edit "))
+      header.appendChild(document.createTextNode('Edit '))
       header.appendChild(document.createTextNode(this.name()))
 
       this.refresh()

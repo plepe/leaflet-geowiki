@@ -35,8 +35,8 @@ module.exports = function (data) {
   })
 
   return {
-    "type": "FeatureCollection",
-    "properties": data.properties,
-    "features": data.layers
+    'type': 'FeatureCollection',
+    'properties': data.properties,
+    'features': data.layers
   }
 }
