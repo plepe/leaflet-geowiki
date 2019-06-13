@@ -6,10 +6,19 @@
   "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
   "license": "GPL-3.0",
   "scripts": {
+    "build": "mkdir -p dist/ && npm run build-css && npm run build-viewer && npm run build-editor",
+    "build-css": "cp css/style.css dist/leaflet-geowiki.css && cp css/style.css dist/leaflet-geowiki-editor.css",
+    "build-viewer": "browserify src/Viewer.js -o dist/leaflet-geowiki.js",
+    "build-editor": "browserify src/Editor.js -o dist/leaflet-geowiki-editor.js",
+    "prepare": "npm run build",
+    "watch-viewer": "watchify --debug src/Viewer.js -o dist/leaflet-geowiki.js -v",
+    "watch-editor": "watchify --debug src/Editor.js -o dist/leaflet-geowiki-editor.js -v",
     "lint": "standard --fix src/*.js index.js"
   },
   "devDependencies": {
-    "standard": "^12.0.1"
+    "browserify": "^16.2.3",
+    "standard": "^12.0.1",
+    "watchify": "^3.11.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
