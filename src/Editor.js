@@ -67,13 +67,15 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
 
     this.drawControl = new L.Control.Draw({
       draw: {
+        circle: false,
         polyline: {
           shapeOptions: {}
         }
       },
       edit: {
         featureGroup: this,
-        edit: false
+        edit: false,
+        remove: false
       }
     })
     map.addControl(this.drawControl)
