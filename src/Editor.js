@@ -104,9 +104,12 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
 
   save () {
     return this.layerTree.map((layer, i) => {
+      let contents = layer.toGeoJSON()
+      contents['geowiki-version'] = "0.1"
+
       return {
         filename: layer.filename || 'unnamed.geowiki',
-        contents: JSON.stringify(layer.toGeoJSON(), null, '  ')
+        contents: JSON.stringify(contents, null, '  ')
       }
     })
   },
