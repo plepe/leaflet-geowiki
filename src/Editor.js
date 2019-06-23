@@ -119,11 +119,11 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
 
   /**
    * save all files
-   * @method save
+   * @method saveAll
    * @memberof L.GeowikiEditor
    * @return {L.GeowikiViewer#Filedata[]} Returns meta data and contents of all files. All properties of the file data from loading will be kept, only contents updated.
    */
-  save () {
+  saveAll () {
     return this.layerTree.map((layer, i) => {
       let contents = layer.toGeoJSON()
       contents['geowiki-version'] = "0.1"
