@@ -20,7 +20,7 @@ L.GeowikiViewer = L.FeatureGroup.extend({
    * load a file
    * @method load
    * @memberof L.GeowikiViewer
-   * @param {L.GeowikiViewer#Filedata} filedata - Information about the file being loaded
+   * @param {L.GeowikiViewer#Filedata|string} filedata - Information about the file being loaded. Alternatively, a file name can be provided, which will be loaded via XMLHttpRequest.
    * @param {function} [callback] - Callback which will be called when the file is loaded with (err, result). Result of type Layer.
    */
   load (filedata, callback) {
@@ -28,6 +28,12 @@ L.GeowikiViewer = L.FeatureGroup.extend({
 
     if (!callback) {
       callback = () => {}
+    }
+
+    if (typeof filedata === 'string') {
+      filedata = {
+        name: filedata
+      }
     }
 
     if (!('contents' in filedata)) {
