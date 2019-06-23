@@ -24,7 +24,10 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     this.on('load', () => this.edit())
 
     // create an initial empty file
-    this.load('unnamed.geowiki', require('./defaultFile.json'))
+    this.load({
+      name: 'unnamed.geowiki',
+      contents: require('./defaultFile.json')
+    })
     this._currentLayer = this.layerTree[0].layerTree[0]
 
     // this.edit()
@@ -107,10 +110,17 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
       let contents = layer.toGeoJSON()
       contents['geowiki-version'] = "0.1"
 
-      return {
-        filename: layer.filename || 'unnamed.geowiki',
-        contents: JSON.stringify(contents, null, '  ')
+      let filedata = {}
+      for (let k in layer.filedata) {
+        filedata[k] = layer.filedata[k]
       }
+
+      filedata.contents = JSON.stringify(contents, null, '  ')
+      if (!('name' in filedata)) {
+        result.name = 'unnamed.geowiki'
+      }
+
+      return filedata
     })
   },
 

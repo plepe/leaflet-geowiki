@@ -12,19 +12,16 @@ L.GeowikiViewer = L.FeatureGroup.extend({
     this.layerTree = []
   },
 
-  load (filename, contents, callback) {
-    if (typeof contents === 'function') {
-      callback = contents
-      contents = null
-    }
+  load (filedata, callback) {
+    let contents
 
     if (!callback) {
       callback = () => {}
     }
 
-    if (contents == null) {
+    if (!('contents' in filedata)) {
       let req = new window.XMLHttpRequest()
-      req.open('GET', filename)
+      req.open('GET', filedata.name)
       req.overrideMimeType('application/json')
       req.onreadystatechange = () => {
         if (req.readyState !== 4) {
@@ -32,22 +29,25 @@ L.GeowikiViewer = L.FeatureGroup.extend({
         }
 
         if (req.status === 200) {
-          this.load(filename, req.responseText, callback)
+          filedata.contents = req.responseText
+          this.load(filedata, callback)
         } else {
           callback(new Error(req.statusText))
         }
       }
 
       return req.send(null)
-    } else if (typeof contents === 'string') {
+    } else if (typeof filedata.contents === 'string') {
       try {
-        contents = JSON.parse(contents)
+        contents = JSON.parse(filedata.contents)
       } catch (e) {
         return callback(e)
       }
+    } else {
+      contents = filedata.contents
     }
 
-    if (filename.match(/\.umap$/)) {
+    if (filedata.name.match(/\.umap$/)) {
       contents = importUmap(contents)
     }
 
@@ -55,11 +55,11 @@ L.GeowikiViewer = L.FeatureGroup.extend({
       contents.properties = {}
     }
     if (!('name' in contents.properties)) {
-      contents.properties.name = filename
+      contents.properties.name = filedata.name
     }
 
     let layer = this.createLayer(this, null)
-    layer.filename = filename
+    layer.filedata = filedata
     this.fire('preload', layer)
 
     layer.load(contents)
