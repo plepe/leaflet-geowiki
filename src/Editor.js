@@ -6,6 +6,18 @@ require('./Viewer.js')
 const EditableLayer = require('./EditableLayer')
 const listLayers = require('./listLayers')
 
+/**
+ * @typedef L.GeowikiViewer#Filedata
+ * Information about a file being loaded / saved
+ * @property {string} [contents] - Contents of the file. If missing, a XMLHttpRequest will be created with the name of the file.
+ * @property {string} [name] - File name including extension. Required, if contents is missing.
+ */
+
+/**
+ * @class L.GeowikiEditor
+ * @extends L.GeowikiViewer
+ * Geowiki Editor class
+ */
 L.GeowikiEditor = L.GeowikiViewer.extend({
   initialize (options) {
     L.GeowikiViewer.prototype.initialize(options)
@@ -105,6 +117,12 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
     }
   },
 
+  /**
+   * save all files
+   * @method save
+   * @memberof L.GeowikiEditor
+   * @return {L.GeowikiViewer#Filedata[]} Returns meta data and contents of all files. All properties of the file data from loading will be kept, only contents updated.
+   */
   save () {
     return this.layerTree.map((layer, i) => {
       let contents = layer.toGeoJSON()

@@ -4,6 +4,10 @@ const Layer = require('./Layer')
 const importUmap = require('./importUmap')
 global.lang_str = {}
 
+/**
+ * @class L.GeowikiViewer
+ * Geowiki Viewer class
+ */
 L.GeowikiViewer = L.FeatureGroup.extend({
   initialize (options) {
     L.Util.setOptions(this, options)
@@ -12,6 +16,13 @@ L.GeowikiViewer = L.FeatureGroup.extend({
     this.layerTree = []
   },
 
+  /**
+   * load a file
+   * @method load
+   * @memberof L.GeowikiViewer
+   * @param {L.GeowikiViewer#Filedata} filedata - Information about the file being loaded
+   * @param {function} [callback] - Callback which will be called when the file is loaded with (err, result). Result of type Layer.
+   */
   load (filedata, callback) {
     let contents
 
