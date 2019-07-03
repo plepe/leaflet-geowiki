@@ -55,5 +55,12 @@
     "type": "paint",
     "default": "#f2756a",
     "geometry-types": [ "Point" ]
+  },
+  "offset": {
+    "name": "offset",
+    "type": "length",
+    "default": "0",
+    "plugin": "leaflet-polylineoffset",
+    "geometry-types": [ "LineString" ]
   }
 }

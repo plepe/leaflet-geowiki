@@ -15,4 +15,8 @@ module.exports = (leafletFeature, style) => {
     leafletStyle.fill = style.fill !== 'none'
   }
   leafletFeature.setStyle(leafletStyle)
+
+  if (style.offset && leafletFeature.setOffset) {
+    leafletFeature.setOffset(style.offset)
+  }
 }
