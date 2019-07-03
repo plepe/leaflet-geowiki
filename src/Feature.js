@@ -152,6 +152,8 @@ class Feature extends Events {
       data.style = this.style
     }
 
+    this.emit('toGeoJSON', data)
+
     data.geometry = this.leafletLayer.toGeoJSON().geometry
 
     return data

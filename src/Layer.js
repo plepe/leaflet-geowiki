@@ -112,6 +112,8 @@ class Layer extends Events {
       data.style = this.style
     }
 
+    this.emit('toGeoJSON', data)
+
     data.features = this.layerTree.map(item => {
       return item.toGeoJSON()
     })

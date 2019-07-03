@@ -68,6 +68,14 @@ module.exports = {
           }
         })
       })
+
+      layer.on('toGeoJSON', data => {
+        layer.additionalStyles.forEach(styleId => {
+          if (layer['style:' + styleId] && Object.keys(layer['style:' + styleId]).length) {
+            data['style:' + styleId] = layer['style:' + styleId]
+          }
+        })
+      })
     }
   },
 
@@ -141,6 +149,14 @@ module.exports = {
       feature.additionalFeatures = {}
 
       feature.refresh()
+    })
+
+    feature.on('toGeoJSON', data => {
+      feature.parent.additionalStyles.forEach(styleId => {
+        if (feature['style:' + styleId] && Object.keys(feature['style:' + styleId]).length) {
+          data['style:' + styleId] = feature['style:' + styleId]
+        }
+      })
     })
   }
 }
