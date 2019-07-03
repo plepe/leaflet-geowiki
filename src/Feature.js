@@ -121,7 +121,7 @@ class Feature extends Events {
 
       let d = document.createElement('div')
       let b = document.createElement('b')
-      b.appendChild(document.createTextNode(this.parent.featureFields[k].name) + ': ')
+      b.appendChild(document.createTextNode(this.parent.featureFields[k].name + ': '))
       d.appendChild(b)
 
       let v = document.createElement('span')
