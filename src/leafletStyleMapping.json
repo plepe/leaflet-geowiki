@@ -1,0 +1,10 @@
+{
+  "stroke": "color",
+  "stroke-width": "weight",
+  "stroke-opacity": "opacity",
+  "fill": "fillColor",
+  "fill-opacity": "fillOpacity",
+  "radius": "radius"
+}
+
+

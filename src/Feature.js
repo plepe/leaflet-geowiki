@@ -4,15 +4,7 @@ const Events = require('events')
 const marker = require('./marker')
 const spec = require('./geojson-css-spec.json')
 const extensions = require('./extensions')
-
-const leafletStyleMapping = {
-  'stroke': 'color',
-  'stroke-width': 'weight',
-  'stroke-opacity': 'opacity',
-  'fill': 'fillColor',
-  'fill-opacity': 'fillOpacity',
-  'radius': 'radius'
-}
+const leafletStyleMapping = require('./leafletStyleMapping.json')
 
 class Feature extends Events {
   constructor (editor, parent) {
