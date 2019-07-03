@@ -54,6 +54,8 @@ class Layer extends Events {
       this.featureFields = data.featureFields
     }
 
+    this.emit('load', data)
+
     data.features.forEach(feature => {
       let item
 

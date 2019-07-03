@@ -8,8 +8,11 @@ module.exports = {
     if (!layer.parent) {
       layer.additionalStyles = []
 
+      layer.on('load', () => {
+        layer.additionalStyles.splice(0, layer.additionalStyles.length, ...(layer.properties.additionalStyles || []))
+      })
+
       layer.on('formDef', formDef => {
-        console.log(layer.additionalStyles)
         formDef.properties.def.additionalStyles = {
           name: 'Additional styles for features',
           type: 'array',
@@ -25,6 +28,14 @@ module.exports = {
       })
     } else {
       layer.additionalStyles = layer.parent.additionalStyles
+
+      layer.on('load', data => {
+        layer.additionalStyles.forEach(styleId => {
+          if (data['style:' + styleId]) {
+            layer['style:' + styleId] = data['style:' + styleId]
+          }
+        })
+      })
 
       layer.on('formDef', formDef => {
         layer.additionalStyles.forEach(styleId => {
