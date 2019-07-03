@@ -1,6 +1,7 @@
 const getStyleForm = require('./getStyleForm')
 const defaultStyle = require('./defaultStyle')
 const applyStyle = require('./applyStyle')
+const evaluateStyle = require('./evaluateStyle')
 
 module.exports = {
   initLayer (layer) {
@@ -112,6 +113,7 @@ module.exports = {
         }
 
         let style = getFullStyle(feature.leafletFeature, feature, styleId)
+        style = evaluateStyle(this, style)
 
         applyStyle(feature.additionalFeatures[styleId], style)
 

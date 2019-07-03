@@ -5,6 +5,7 @@ const marker = require('./marker')
 const spec = require('./geojson-css-spec.json')
 const extensions = require('./extensions')
 const applyStyle = require('./applyStyle')
+const evaluateStyle = require('./evaluateStyle')
 
 class Feature extends Events {
   constructor (editor, parent) {
@@ -176,6 +177,7 @@ class Feature extends Events {
 
   refresh () {
     let style = this.getFullStyle()
+    style = evaluateStyle(this, style)
     let popupContent = this.renderPopup()
 
     applyStyle(this.leafletLayer, style)

@@ -27,6 +27,7 @@
     "leaflet": "^1.5.1",
     "leaflet-draw": "^1.0.4",
     "modulekit-form": "https://github.com/plepe/modulekit-form#browserify",
-    "spdx-license-list": "^6.0.0"
+    "spdx-license-list": "^6.0.0",
+    "twig": "^1.13.3"
   }
 }

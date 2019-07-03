@@ -21,14 +21,14 @@ module.exports = (layer, inheritedValues) => {
             'none': 'none'
           },
           other_def: {
-            type: 'color'
+            type: 'text'
           }
         }
         break
       case 'length':
       case 'opacity':
         formDef = {
-          type: 'float',
+          type: 'text',
           'placeholder': 'inherit' + (inheritedValues ? ' (' + inheritedValues[key] + ')' : '')
         }
         break
