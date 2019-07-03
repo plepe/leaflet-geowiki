@@ -4,7 +4,7 @@ const Events = require('events')
 const marker = require('./marker')
 const spec = require('./geojson-css-spec.json')
 const extensions = require('./extensions')
-const leafletStyleMapping = require('./leafletStyleMapping.json')
+const applyStyle = require('./applyStyle')
 
 class Feature extends Events {
   constructor (editor, parent) {
@@ -177,19 +177,9 @@ class Feature extends Events {
   refresh () {
     let style = this.getFullStyle()
     let popupContent = this.renderPopup()
-    let leafletStyle = {}
 
-    for (let k in style) {
-      if (k in leafletStyleMapping) {
-        leafletStyle[leafletStyleMapping[k]] = style[k]
-      }
-    }
+    applyStyle(this.leafletLayer, style)
 
-    leafletStyle.stroke = style.stroke !== 'none'
-    if (spec['fill']['geometry-types'].includes(this.leafletLayer.feature.geometry.type)) {
-      leafletStyle.fill = style.fill !== 'none'
-    }
-    this.leafletLayer.setStyle(leafletStyle)
     if (popupContent) {
       this.leafletLayer.bindPopup(popupContent)
     }

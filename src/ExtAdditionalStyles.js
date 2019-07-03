@@ -1,7 +1,6 @@
 const getStyleForm = require('./getStyleForm')
 const defaultStyle = require('./defaultStyle')
-const spec = require('./geojson-css-spec.json')
-const leafletStyleMapping = require('./leafletStyleMapping.json')
+const applyStyle = require('./applyStyle')
 
 module.exports = {
   initLayer (layer) {
@@ -113,20 +112,8 @@ module.exports = {
         }
 
         let style = getFullStyle(feature.leafletFeature, feature, styleId)
-        let leafletStyle = {}
 
-        for (let k in style) {
-          if (k in leafletStyleMapping) {
-            leafletStyle[leafletStyleMapping[k]] = style[k]
-          }
-        }
-
-        leafletStyle.stroke = style.stroke !== 'none'
-        if (spec['fill']['geometry-types'].includes(feature.leafletLayer.feature.geometry.type)) {
-          leafletStyle.fill = style.fill !== 'none'
-        }
-
-        feature.additionalFeatures[styleId].setStyle(leafletStyle)
+        applyStyle(feature.additionalFeatures[styleId], style)
 
         if (popupContent) {
           feature.additionalFeatures[styleId].bindPopup(popupContent)
