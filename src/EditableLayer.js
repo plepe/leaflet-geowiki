@@ -109,6 +109,8 @@ class EditableLayer extends Layer {
       def: getStyleForm(null, this.parent ? this.parent.getFullStyle() : defaultStyle())
     }
 
+    this.emit('formDef', formDef)
+
     let f = new ModulekitForm(
       'data',
       formDef, {
@@ -123,14 +125,20 @@ class EditableLayer extends Layer {
     input.value = 'Ok'
     form.appendChild(input)
 
-    f.set_data({
+    let data = {
       featureFields: this.featureFields,
       properties: this.properties,
       style: this.style
-    })
+    }
+
+    this.emit('formLoad', data)
+
+    f.set_data(data)
 
     f.onchange = () => {
       let newData = f.get_data()
+
+      this.emit('formSave', newData)
 
       if (newData.featureFields) {
         this.featureFields = newData.featureFields

@@ -1,8 +1,12 @@
+const Events = require('events')
+
 const Feature = require('./Feature')
 const defaultStyle = require('./defaultStyle')
+const extensions = require('./extensions')
 
-class Layer {
+class Layer extends Events {
   constructor (editor, parent) {
+    super()
     this.editor = editor
     this.parent = parent
     this.items = []
@@ -11,6 +15,8 @@ class Layer {
     this.style = {}
     this.layerTree = []
     this.isHidden = false
+
+    extensions.forEach(extension => extension.initLayer(this))
   }
 
   name () {

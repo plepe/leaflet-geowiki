@@ -1,7 +1,9 @@
 /* global L:false */
+const Events = require('events')
 
 const marker = require('./marker')
 const spec = require('./geojson-css-spec.json')
+const extensions = require('./extensions')
 
 const leafletStyleMapping = {
   'stroke': 'color',
@@ -12,11 +14,14 @@ const leafletStyleMapping = {
   'radius': 'radius'
 }
 
-class Feature {
+class Feature extends Events {
   constructor (editor, parent) {
+    super()
     this.editor = editor
     this.parent = parent
     this.isHidden = false
+
+    extensions.forEach(extension => extension.initFeature(this))
   }
 
   name () {
@@ -24,6 +29,8 @@ class Feature {
   }
 
   load (data) {
+    this.emit('load', data)
+
     this.leafletLayer = L.geoJSON(data, {
       pointToLayer: (feature, latlng) => L.circleMarker(latlng)
     }).getLayers()[0]
@@ -70,6 +77,8 @@ class Feature {
   }
 
   add () {
+    this.emit('add')
+
     if (this.leafletLayer.setStyle) {
       this.leafletLayer.setStyle({ editing: {}, original: {} })
     }
@@ -200,6 +209,8 @@ class Feature {
         this.leafletMarker.bindPopup(popupContent)
       }
     }
+
+    this.emit('refresh')
   }
 }
 

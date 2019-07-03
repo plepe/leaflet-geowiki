@@ -52,6 +52,8 @@ class EditableFeature extends Feature {
       }
     }
 
+    this.emit('formDef', formDef)
+
     let f = new ModulekitForm(
       'data',
       formDef, {
@@ -66,14 +68,20 @@ class EditableFeature extends Feature {
     input.value = 'Ok'
     form.appendChild(input)
 
-    f.set_data({
+    let data = {
       layer: this.parent.path(),
       properties: this.properties,
       style: this.style
-    })
+    }
+
+    this.emit('formLoad', data)
+
+    f.set_data(data)
 
     f.onchange = () => {
       let newData = f.get_data()
+
+      this.emit('formSave', newData)
 
       if (newData.layer !== this.parent.path()) {
         this.parent.items.splice(this.parent.items.indexOf(this), 1)
@@ -143,6 +151,8 @@ class EditableFeature extends Feature {
     if (this.leafletMarker) {
       this.leafletMarker.setLatLng(this.leafletLayer.getLatLng())
     }
+
+    this.emit('notifyModify')
   }
 
   disableEdit () {
