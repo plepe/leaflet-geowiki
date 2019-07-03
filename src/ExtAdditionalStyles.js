@@ -132,7 +132,7 @@ module.exports = {
         }
 
         let style = getFullStyle(feature.leafletFeature, feature, styleId)
-        style = evaluateStyle(this, style)
+        style = evaluateStyle(feature, style)
 
         applyStyle(feature.additionalFeatures[styleId], style)
 
