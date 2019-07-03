@@ -112,6 +112,18 @@ module.exports = {
       })
     })
 
+    feature.on('show', () => {
+      feature.parent.additionalStyles.forEach(styleId => {
+        feature.additionalFeatures[styleId].addTo(feature.editor._map)
+      })
+    })
+
+    feature.on('hide', () => {
+      feature.parent.additionalStyles.forEach(styleId => {
+        feature.additionalFeatures[styleId].remove()
+      })
+    })
+
     feature.on('refresh', () => {
       if (!feature.additionalFeatures) {
         feature.additionalFeatures = {}
@@ -125,10 +137,10 @@ module.exports = {
             L.geoJSON(feature.leafletLayer.toGeoJSON(), {
               pointToLayer: (feature, latlng) => L.circleMarker(latlng)
             }).getLayers()[0]
-          feature.additionalFeatures[styleId].addTo(feature.editor._map)
           if (feature.edit) {
             feature.additionalFeatures[styleId].on('click', e => feature.edit())
           }
+          feature.editor.addLayer(feature.additionalFeatures[styleId])
         }
 
         let style = getFullStyle(feature.leafletFeature, feature, styleId)

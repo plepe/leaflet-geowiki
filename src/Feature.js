@@ -162,11 +162,15 @@ class Feature extends Events {
   hide () {
     this.isHidden = true
     this.leafletLayer.remove()
+
+    this.emit('hide')
   }
 
   show () {
     this.isHidden = false
     this.leafletLayer.addTo(this.editor._map)
+
+    this.emit('show')
   }
 
   toggleVisibility () {
