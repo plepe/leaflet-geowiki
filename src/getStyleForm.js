@@ -21,14 +21,14 @@ module.exports = (layer, inheritedValues) => {
             'none': 'none'
           },
           other_def: {
-            type: 'text'
+            type: 'textarea'
           }
         }
         break
       case 'length':
       case 'opacity':
         formDef = {
-          type: 'text',
+          type: 'textarea',
           'placeholder': 'inherit' + (inheritedValues ? ' (' + inheritedValues[key] + ')' : '')
         }
         break
@@ -42,7 +42,7 @@ module.exports = (layer, inheritedValues) => {
       default:
         console.log('unknown geojson field type', def.type)
         formDef = {
-          type: 'text'
+          type: 'textarea'
         }
     }
 
