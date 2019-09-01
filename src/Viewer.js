@@ -1,4 +1,5 @@
 /* global L:false, define:false */
+const yaml = require('yaml')
 
 const Layer = require('./Layer')
 const importUmap = require('./importUmap')
@@ -56,7 +57,7 @@ L.GeowikiViewer = L.FeatureGroup.extend({
       return req.send(null)
     } else if (typeof filedata.contents === 'string') {
       try {
-        contents = JSON.parse(filedata.contents)
+        contents = yaml.parse(filedata.contents)
       } catch (e) {
         return callback(e)
       }

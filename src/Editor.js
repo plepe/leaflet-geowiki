@@ -1,6 +1,7 @@
 /* global L:false */
 
 require('leaflet-draw')
+const yaml = require('yaml')
 
 require('./Viewer.js')
 const EditableLayer = require('./EditableLayer')
@@ -133,7 +134,7 @@ L.GeowikiEditor = L.GeowikiViewer.extend({
         filedata[k] = layer.filedata[k]
       }
 
-      filedata.contents = JSON.stringify(contents, null, '  ')
+      filedata.contents = yaml.stringify(contents)
       if (!('name' in filedata)) {
         result.name = 'unnamed.geowiki'
       }
